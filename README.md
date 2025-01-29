@@ -25,6 +25,7 @@ ssh-add ~/.ssh/id_rsa
 # edit kubeone.yaml
 # /home/codespace/id_rsa  => /home/codespace/.ssh/id_rsa 
 
+# terraform.tfvars
 # TODO clustername
 # TODO project id
 
@@ -33,8 +34,7 @@ terraform apply -var=control_plane_target_pool_members_count=1 -auto-approve
 
 terraform output -json > tf.json
 
-kubeone apply -m kubeone.yaml -t tf.json
-
+kubeone apply -m /workspaces/kubermatic-kubernetes-platform-administration/kubeone.yaml -t tf.json
 terraform apply
 
 export KUBECONFIG=/workspaces/kubermatic-kubernetes-platform-administration/kubeone_1.9.1_linux_amd64/examples/terraform/gce/hubert-test-kubeconfig
@@ -54,8 +54,11 @@ VERSION=$(curl -w '%{url_effective}' -I -L -s -S https://github.com/kubermatic/k
 wget https://github.com/kubermatic/kubermatic/releases/download/v${VERSION}/kubermatic-ce-v${VERSION}-linux-amd64.tar.gz
 tar -xzvf kubermatic-ce-v${VERSION}-linux-amd64.tar.gz
 
-htpasswd -bnBC 10 "" pa55wd01* | tr -d ':\n' | sed 's/$2y/$2a/'
+sudo cp kubermatic-installer /usr/local/bin/
 
+cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32
+htpasswd -bnBC 10 "" pa55word01 | tr -d ':\n' | sed 's/$2y/$2a/'
+uuidgen -r
 
 kubermatic.yaml
 values.yaml
@@ -64,14 +67,27 @@ seed.yaml
 kubectl apply -f storageclass-fast.yaml
 kubectl apply -f storageclass-backup.yaml
 
+# dns
+## values.yaml
+nginx:
+  controller:
+    service:
+      loadBalancerIP: "10.33.16.1"
+## seed.yaml
+spec:
+  nodeportProxy:
+    annotations:
+        networking.gke.io/load-balancer-ip-addresses: "1.2.3.4"
+
 kubermatic-installer --kubeconfig /workspaces/kubermatic-kubernetes-platform-administration/kubeone_1.9.1_linux_amd64/examples/terraform/gce/hubert-test-kubeconfig \
     --charts-directory charts deploy \
     --config kubermatic.yaml \
     --helm-values values.yaml
 
-watch -n 1 kubectl -n kubermatic get pods\
+watch -n 1 kubectl -n kubermatic get pods
 
 # change email in clusterissuer
+# TODO email
 kubectl apply -f clusterissuer.yaml
 
 # Authenticate with the service account
@@ -90,6 +106,8 @@ nslookup test.hubert.event-01.cloud-native.training
 # change clusterissuer in values and kubermatic yaml
 
 # re-run installer
+
+kubectl get certs -A
 
 
 ```
