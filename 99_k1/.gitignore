@@ -1,8 +1,0 @@
-.DS_Store
-.secrets/
-tf_infra/*.tf
-tf_infra/.terraform/
-tf_infra/.terraform/**
-tf_infra/*.hcl
-tf_infra/tf.json
-tf_infra/*.tfstate

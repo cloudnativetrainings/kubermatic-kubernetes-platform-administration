@@ -1,0 +1,12 @@
+project                                 = "<FILL-IN-YOUR-GCE-PROJECT-ID>"
+cluster_name                            = "<FILL-IN-CLUSTER-NAME>"
+region                                  = "europe-west3"
+ssh_public_key_file                     = "/training/.secrets/gce.pub"
+ssh_private_key_file                    = "/training/.secrets/gce"
+control_plane_vm_count                  = 3
+control_plane_target_pool_members_count = 3
+initial_machinedeployment_replicas      = 3
+control_plane_image_family              = "ubuntu-2404-lts-amd64"
+control_plane_type                      = "n1-standard-4"
+worker_os                               = "ubuntu"
+workers_type                            = "n1-standard-4"

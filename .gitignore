@@ -1,2 +1,8 @@
-.vscode
 .DS_Store
+.secrets/
+kubeone/tf_infra/*.tf
+kubeone/tf_infra/.terraform/
+kubeone/tf_infra/.terraform/**
+kubeone/tf_infra/*.hcl
+kubeone/tf_infra/tf.json
+kubeone/tf_infra/*.tfstate

@@ -6,15 +6,6 @@ In this lab you will create the Kubernetes Cluster in which we will deploy KKP.
 cd ~/01_create_kubeone_cluster/
 ```
 
-## Install KubeOne
-
-```bash
-make install_k1
-
-# Verify installation
-kubeone version
-```
-
 ## Get KubeOne Configuration Files
 
 ```bash
