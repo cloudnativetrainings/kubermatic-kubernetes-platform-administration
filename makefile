@@ -9,7 +9,7 @@ verify:
 	helm version
 	test -n "$(K1_VERSION)"
 	kubeone version
-	test -e /training/kubeone_${K1_VERSION}_linux_amd64/
+	test -e /tmp/k1_${K1_VERSION}_linux_amd64/
 	test -n "$(GCE_PROJECT)" 
 	test -n "$(TRAINEE_NAME)" 
 	test -n "$(DOMAIN)" 

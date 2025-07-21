@@ -28,14 +28,14 @@ make create_cluster
 
 # ensure the downloaded kubeconfig is the default kubeconfig
 mkdir /root/.kube
-cp /training/kubeone/$TRAINEE_NAME-k1-cluster-kubeconfig /root/.kube/config
+cp /training/k1/$TRAINEE_NAME-k1-cluster-kubeconfig /root/.kube/config
 
 # verify
 kubectl get nodes
 
 # get a minimalistic visual representation of your cluster
 # note the ui is currently only in beta state
-kubeone ui -m /training/kubeone/kubeone.yaml -t /training/kubeone/tf_infra
+kubeone ui -m /training/k1/kubeone.yaml -t /training/k1/tf_infra
 ```
 
 ## Engage autoscaling on worker nodes
@@ -45,11 +45,11 @@ kubeone ui -m /training/kubeone/kubeone.yaml -t /training/kubeone/tf_infra
 kubectl -n kube-system get deployment cluster-autoscaler
 
 # get the machinedeployment
-kubeone config machinedeployments -m /training/kubeone/kubeone.yaml -t /training/kubeone/tf_infra > /training/kubeone/md.yaml
+kubeone config machinedeployments -m /training/k1/kubeone.yaml -t /training/k1/tf_infra > /training/k1/md.yaml
 
 # change the max worker nodes from 1 to 3
-sed -i 's/cluster-api-autoscaler-node-group-max-size: "1"/cluster-api-autoscaler-node-group-max-size: "3"/g' /training/kubeone/md.yaml
+sed -i 's/cluster-api-autoscaler-node-group-max-size: "1"/cluster-api-autoscaler-node-group-max-size: "3"/g' /training/k1/md.yaml
 
 # apply the change
-kubectl apply -f /training/kubeone/md.yaml
+kubectl apply -f /training/k1/md.yaml
 ```

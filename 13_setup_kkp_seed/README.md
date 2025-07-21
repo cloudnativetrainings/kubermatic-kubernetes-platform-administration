@@ -11,7 +11,7 @@ cd /training/03_setup_kkp_seed/
 For the KKP Seed Components being able to communicate with the KKP Master Components you have to create a secret containing the kubeconfig of the Master Cluster. In our case the Seed and Master Components are running in the same cluster.
 
 ```bash
-cp /training/kubeone/kkp-master-seed-cluster-kubeconfig /training/.tmp/temp-seed-kubeconfig
+cp /training/k1/kkp-master-seed-cluster-kubeconfig /training/.tmp/temp-seed-kubeconfig
 kubectl create secret generic seed-kubeconfig -n kubermatic --from-file kubeconfig=/training/.tmp/temp-seed-kubeconfig --dry-run=client -o yaml > /training/kkp/seed-kubeconfig-secret.yaml
 kubectl apply -f /training/kkp/seed-kubeconfig-secret.yaml
 ```
