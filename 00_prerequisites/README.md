@@ -10,6 +10,9 @@ kubectl version --client
 
 # verify terraform is installed
 terraform version
+
+# verify kubeone is installed
+kubeone version
 ```
 
 ### Copy your Training Files

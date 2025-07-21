@@ -2,6 +2,9 @@
 verify:
 	test -f /root/.trainingrc
 	grep "source /root/.trainingrc" /root/.bashrc
+	yq --version
+	uuidgen --version
+	which htpasswd
 	kubectl version --client
 	gcloud version
 	terraform version
@@ -9,7 +12,7 @@ verify:
 	helm version
 	test -n "$(K1_VERSION)"
 	kubeone version
-	test -e /tmp/k1_${K1_VERSION}_linux_amd64/
+	test -e /tmp/kubeone_${K1_VERSION}_linux_amd64/
 	test -n "$(GCE_PROJECT)" 
 	test -n "$(TRAINEE_NAME)" 
 	test -n "$(DOMAIN)" 
@@ -25,4 +28,4 @@ verify:
 # TODO verify gcp sa permissions
 	echo "Training Environment successfully verified"
 
-.PHONY: teardown
+

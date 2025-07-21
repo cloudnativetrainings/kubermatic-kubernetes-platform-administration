@@ -3,13 +3,13 @@
 In this lab you will create the Kubernetes Cluster in which we will deploy KKP.
 
 ```bash
-cd /training/01_create-kubeone-cluster/
+cd /training/01_create-k1-cluster/
 ```
 
 ## Get KubeOne Configuration Files
 
 ```bash
-make prepare_tf_config
+make prepare-tf-config
 ```
 
 ## Create infrastructure
@@ -24,7 +24,7 @@ gcloud compute instances list
 ## Create Cluster
 
 ```bash
-make create_cluster
+make create-cluster
 
 # ensure the downloaded kubeconfig is the default kubeconfig
 mkdir /root/.kube

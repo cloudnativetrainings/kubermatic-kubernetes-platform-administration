@@ -7,30 +7,32 @@ In this lab you will create your first User Cluster.
 Generate a ServiceAccount holding the GCE Credentials via
 
 ```bash
-base64 -w0 /training/secrets/google-sa-key.json
+base64 -w0 base64 -w0 /training/.secrets/gcloud-service-account.json
 ```
 
-- Create a new project.
-- Click the button `Create Resource / Cluster`
-- Within Tab `Provider`
-  - Choose Provider `Google Cloud`
-  - Choose Datecenter `Frankurt`
-- Within Tab `Cluster`
-  - Generate a random Cluster name
-- Within Tab `Settings`
-  - Copy the base64 encoded GCE google-sa-key.json in the field `Service Account`
-- Within Tab `Initial Nodes`
-  - Generate a random MachineDeployment name
-  - Set the number of replicas to 3
-  - Choose Disk Type `pd-ssd`
-  - Choose Machine Type `n1-standard-2`
-  - Check `Preemptible` box
-- Within Tab `Applications`
-  - do nothing yet
-- Within Tab `Summary`
-  - Click the button `Create Cluster`
+- Create a new project via the button `+ Add Project`.
+- Choose the project.
+- Start the cluster creation dialogue via clicking the button `Create Resource / Cluster`
+  - Within Tab `Provider`
+    - Choose Provider `Google Cloud`
+    - Choose Datecenter `Frankurt`
+  - Within Tab `Cluster`
+    - Generate a random Cluster name
+  - Within Tab `Settings`
+    - Copy the base64 encoded GCE google-sa-key.json in the field `Service Account`
+  - Within Tab `Initial Nodes`
+    - Generate a random MachineDeployment name
+    - Set the number of replicas to 3
+    - Choose Disk Type `pd-ssd`
+    - Choose Machine Type `n1-standard-2`
+    - Check `Preemptible` box
+  - Within Tab `Applications`
+    - do nothing yet
+  - Within Tab `Summary`
+    - Click the button `Create Cluster`
 
-Afterwards it will take ~ 5 minutes your cluster will be usable.
+>**NOTE:**
+>It will take ~ 5 minutes your cluster will be usable. The control plane of the user cluster will be up very soon, but for the worker nodes VMs have to be provisioned.
 
 ## Verify in Terminal
 
@@ -45,9 +47,7 @@ watch -n 1 kubectl -n cluster-XXXXX get pods
 
 ## Connect to the User Cluster
 
-Download the kubeconfig via the following button:
-
-![](../img/get_kubeconfig.png)
+Download the kubeconfig via the button `Get Kubeconfig` on the right above within the cluster in the KKP UI.
 
 Drag&Drop the downloaded kubeconfig into the Google Cloud Shell.
 
@@ -68,6 +68,9 @@ kubectl -n cluster-XXXXX delete pod etcd-0
 # the StatefulSet will take care to restart the deleted etcd-0 node
 watch -n 1 kubectl -n cluster-XXXXX get pods
 ```
+
+>**NOTE:**
+>Due to KKP makes use of HA functionality within Kubernetes such incidents get auto-healed.
 
 ## Scale the User Cluster
 
