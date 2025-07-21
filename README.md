@@ -1,163 +1,117 @@
+# Kubermatic Kubernetes Platform Administration
 
-## K1
+## Prepare Google Cloud Shell
 
-```bash
+### Allow Cookies
 
-# install tf
-sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
-wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
-echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-sudo apt update
-sudo apt-get install terraform
+If you are in Incognito Mode you may get this message:
 
-# install k1
-curl -sfL get.kubeone.io | sh
+![](./img/cookies_01.png)
 
-cd kubeone_1.9.1_linux_amd64/examples/terraform/gce
-terraform init
-export GOOGLE_CREDENTIALS=$(cat /workspaces/kubermatic-kubernetes-platform-administration/gcloud-service-account.json)
+Open this dialogue:
 
-# ssh
-# TODO path
-ssh-keygen -N '' -f ~/.ssh/id_rsa
-eval `ssh-agent`
-ssh-add ~/.ssh/id_rsa
-# edit kubeone.yaml
-# /home/codespace/id_rsa  => /home/codespace/.ssh/id_rsa 
+![](./img/cookies_02.png)
 
-# terraform.tfvars
-# TODO clustername
-# TODO project id
+Allow Cookies:
 
+![](./img/cookies_03.png)
 
-terraform apply -var=control_plane_target_pool_members_count=1 -auto-approve
+### Select Home Directory
 
-terraform output -json > tf.json
+![](./img/open_home_workspace.png)
 
-kubeone apply -m /workspaces/kubermatic-kubernetes-platform-administration/kubeone.yaml -t tf.json
-terraform apply
+### Open a new tab
 
-export KUBECONFIG=/workspaces/kubermatic-kubernetes-platform-administration/kubeone_1.9.1_linux_amd64/examples/terraform/gce/hubert-test-kubeconfig
-```
+![](./img/choose_project.png)
 
-## KKP
+## Setup Environment
 
 ```bash
+# get the training materials
+mkdir -p ~/.tmp
+git clone https://github.com/cloudnativetrainings/trainings.git ~/.tmp
+cp -r ~/.tmp/kubermatic_kubernetes_platform_administration/* ~
+cp -r ~/.tmp/kubermatic_kubernetes_platform_administration/.trainingrc ~/.trainingrc
 
-mkdir kkp
-cd kkp
+# setup the Google Cloud Project in .trainingc file
 
-# For latest version:
-VERSION=$(curl -w '%{url_effective}' -I -L -s -S https://github.com/kubermatic/kubermatic/releases/latest -o /dev/null | sed -e 's|.*/v||')
-# For specific version set it explicitly:
-# VERSION=2.25.x
-wget https://github.com/kubermatic/kubermatic/releases/download/v${VERSION}/kubermatic-ce-v${VERSION}-linux-amd64.tar.gz
-tar -xzvf kubermatic-ce-v${VERSION}-linux-amd64.tar.gz
+# create folders
+mkdir -p ~/secrets
+mkdir -p ~/bin
 
-sudo cp kubermatic-installer /usr/local/bin/
+# create SSH key-pair
+ssh-keygen -N '' -f ~/secrets/kkp_admin_training
 
-cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32
-htpasswd -bnBC 10 "" pa55word01 | tr -d ':\n' | sed 's/$2y/$2a/'
-uuidgen -r
+# get the Google Credentials and add it to the .trainingrc file
+touch ~/secrets/google-sa-key.json
+source ~/.trainingrc
+make get-google-credentials
 
-kubermatic.yaml
-values.yaml
-seed.yaml
+# re-source the .trainingrc file again
+source ~/.trainingrc
 
-kubectl apply -f storageclass-fast.yaml
-kubectl apply -f storageclass-backup.yaml
-
-# dns
-## values.yaml
-nginx:
-  controller:
-    service:
-      loadBalancerIP: "10.33.16.1"
-## seed.yaml
-spec:
-  nodeportProxy:
-    annotations:
-        networking.gke.io/load-balancer-ip-addresses: "1.2.3.4"
-
-kubermatic-installer --kubeconfig /workspaces/kubermatic-kubernetes-platform-administration/kubeone_1.9.1_linux_amd64/examples/terraform/gce/hubert-test-kubeconfig \
-    --charts-directory charts deploy \
-    --config kubermatic.yaml \
-    --helm-values values.yaml
-
-watch -n 1 kubectl -n kubermatic get pods
-
-# change email in clusterissuer
-# TODO email
-kubectl apply -f clusterissuer.yaml
-
-# Authenticate with the service account
-gcloud auth activate-service-account --key-file=/workspaces/kubermatic-kubernetes-platform-administration/gcloud-service-account.json
-
-gcloud config set project kkp-event-01
-
-gcloud dns record-sets transaction start --zone=event-01-hubert
-gcloud dns record-sets transaction add --zone=event-01-hubert --ttl 60 --name="hubert.event-01.cloud-native.training." --type A 35.234.90.235
-gcloud dns record-sets transaction add --zone=event-01-hubert --ttl 60 --name="*.hubert.event-01.cloud-native.training."  --type A 35.234.90.235
-gcloud dns record-sets transaction execute --zone event-01-hubert
-
-nslookup hubert.event-01.cloud-native.training
-nslookup test.hubert.event-01.cloud-native.training
-
-# change clusterissuer in values and kubermatic yaml
-
-# re-run installer
-
-kubectl get certs -A
-
-
+# verify the environment
+make verify
 ```
 
-## Seed
+## Fix K1 nodes due to GCP ephemeral nodes
+
+Due to we are using ephemeral nodes on GCP it can happen that the K1 worker nodes get into state `NotReady`. If this happens you have to delete the existing machines. The MachineController will spawn up new worker nodes afterwards.
 
 ```bash
+# delete all machines
+kubectl -n kube-system delete machine --all
 
-# kubermatic-installer convert-kubeconfig /workspaces/kubermatic-kubernetes-platform-administration/kubeone_1.9.1_linux_amd64/examples/terraform/gce/hubert-test-kubeconfig
-
-cp /workspaces/kubermatic-kubernetes-platform-administration/kubeone_1.9.1_linux_amd64/examples/terraform/gce/hubert-test-kubeconfig temp-seed-kubeconfig
-kubectl create secret generic seed-kubeconfig -n kubermatic --from-file kubeconfig=temp-seed-kubeconfig --dry-run=client -o yaml > seed-kubeconfig-secret.yaml
-kubectl apply -f seed-kubeconfig-secret.yaml
-
-
-kubectl apply -f seed.yaml
-
-kubectl -n kubermatic get pods
-
-# Verify that the following pods are running
-# * kubermatic-seed-controller-manager-...
-# * nodeport-proxy-...
-# * seed-proxy-kubermatic-...
-
-# Re-run the installer with kubermatic-seed option
-kubermatic-installer --kubeconfig /workspaces/kubermatic-kubernetes-platform-administration/kubeone_1.9.1_linux_amd64/examples/terraform/gce/hubert-test-kubeconfig \
-    --charts-directory charts kubermatic-seed \
-    --config kubermatic.yaml \
-    --helm-values values.yaml    
-
-
-gcloud dns record-sets transaction start --zone=event-01-hubert
-gcloud dns record-sets transaction add --zone=event-01-hubert --ttl 60 --name="*.kubermatic.hubert.event-01.cloud-native.training." --type A 35.246.177.33
-gcloud dns record-sets transaction execute --zone event-01-hubert
-
-nslookup test.kubermatic.hubert.event-01.cloud-native.training
-
+# verify new nodes are coming up
+kubectl get nodes
 ```
 
-## Create user cluster
+## Teardown Environment
+
+### Teardown User Clusters
+
+If you have User Clusters you have to delete them.
 
 ```bash
-base64 -w0 /workspaces/kubermatic-kubernetes-platform-administration/gcloud-service-account.json
+# delete all user clusters
+kubectl delete clusters --all
+
+# verify no user cluster VMs exist
+gcloud compute instances list --format json | jq length
 ```
 
-## Teardown K1
+### Teardown DNS entries
 
-```
-delete user clusters
-delete dns entries
-kubeone reset --manifest kubeone.yaml -t tf.json -y
+If you have DNS entries you have to delete them.
+
+```bash
+# delete Seed DNS entry
+export SEED_IP=$(kubectl -n kubermatic get svc nodeport-proxy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+gcloud dns record-sets transaction start --zone=$GCP_DNS_ZONE
+gcloud dns record-sets transaction remove --zone=$GCP_DNS_ZONE --ttl 60 --type A $SEED_IP --name="*.kubermatic.$GCP_DOMAIN."
+gcloud dns record-sets transaction execute --zone $GCP_DNS_ZONE
+
+# delete Master DNS entries
+export INGRESS_IP=$(kubectl -n nginx-ingress-controller get service nginx-ingress-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+gcloud dns record-sets transaction start --zone=$GCP_DNS_ZONE
+gcloud dns record-sets transaction remove --zone=$GCP_DNS_ZONE --ttl 60 --type A $INGRESS_IP --name="$GCP_DOMAIN."
+gcloud dns record-sets transaction remove --zone=$GCP_DNS_ZONE --ttl 60 --type A $INGRESS_IP --name="*.$GCP_DOMAIN."
+gcloud dns record-sets transaction execute --zone $GCP_DNS_ZONE
 ```
 
+### Teardown K1 Cluster
+
+```bash
+cd ~/kubeone; kubeone reset --manifest kubeone.yaml -t tf.json -y
+cd ~/kubeone; terraform destroy -auto-approve
+
+# verify all machines got deleted 
+# now the number of vms should be 0, if not please delete them in the UI https://console.cloud.google.com/compute/instances
+gcloud compute instances list --format json | jq length
+```
+
+### Teardown Google ServiceAccount
+
+```bash
+gcloud iam service-accounts delete $GCP_SA_MAIL --quiet
+```
