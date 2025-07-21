@@ -1,0 +1,55 @@
+# Create Master/Seed Kubernetes Cluster
+
+In this lab you will create the Kubernetes Cluster in which we will deploy KKP.
+
+```bash
+cd /training/01_create-kubeone-cluster/
+```
+
+## Get KubeOne Configuration Files
+
+```bash
+make prepare_tf_config
+```
+
+## Create infrastructure
+
+```bash
+make terraform
+
+# verify
+gcloud compute instances list
+```
+
+## Create Cluster
+
+```bash
+make create_cluster
+
+# ensure the downloaded kubeconfig is the default kubeconfig
+mkdir /root/.kube
+cp /training/kubeone/$TRAINEE_NAME-k1-cluster-kubeconfig /root/.kube/config
+
+# verify
+kubectl get nodes
+
+# get a minimalistic visual representation of your cluster
+# note the ui is currently only in beta state
+kubeone ui -m /training/kubeone/kubeone.yaml -t /training/kubeone/tf_infra
+```
+
+## Engage autoscaling on worker nodes
+
+```bash
+# verify cluster-autoscaler is running
+kubectl -n kube-system get deployment cluster-autoscaler
+
+# get the machinedeployment
+kubeone config machinedeployments -m /training/kubeone/kubeone.yaml -t /training/kubeone/tf_infra > /training/kubeone/md.yaml
+
+# change the max worker nodes from 1 to 3
+sed -i 's/cluster-api-autoscaler-node-group-max-size: "1"/cluster-api-autoscaler-node-group-max-size: "3"/g' /training/kubeone/md.yaml
+
+# apply the change
+kubectl apply -f /training/kubeone/md.yaml
+```

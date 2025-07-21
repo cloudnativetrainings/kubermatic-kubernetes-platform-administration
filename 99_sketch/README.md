@@ -19,9 +19,9 @@ export GOOGLE_CREDENTIALS=$(cat /workspaces/kubermatic-kubernetes-platform-admin
 
 # ssh
 # TODO path
-ssh-keygen -N '' -f ~/.ssh/id_rsa
+ssh-keygen -N '' -f /training/.ssh/id_rsa
 eval `ssh-agent`
-ssh-add ~/.ssh/id_rsa
+ssh-add /training/.ssh/id_rsa
 # edit kubeone.yaml
 # /home/codespace/id_rsa  => /home/codespace/.ssh/id_rsa 
 
@@ -160,4 +160,3 @@ delete user clusters
 delete dns entries
 kubeone reset --manifest kubeone.yaml -t tf.json -y
 ```
-

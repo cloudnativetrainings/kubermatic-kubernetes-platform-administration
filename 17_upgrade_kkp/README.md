@@ -3,7 +3,7 @@
 In this lab you will upgrade KKP.
 
 ```bash
-cd ~/07_upgrade_kkp
+cd /training/07_upgrade_kkp
 ```
 
 ## Pre Steps
@@ -29,7 +29,7 @@ versions:
 And apply this change again.
 
 ```bash
-kubectl apply -f ~/kkp/kubermatic.yaml
+kubectl apply -f /training/kkp/kubermatic.yaml
 ```
 
 ## Install the new KKP version
@@ -45,15 +45,15 @@ kubermatic-installer --version
 
 ```bash
 # Update Master Components
-kubermatic-installer --kubeconfig ~/.kube/config \
-    --charts-directory ~/kkp/charts deploy \
-    --config ~/kkp/kubermatic.yaml \
-    --helm-values ~/kkp/values.yaml
+kubermatic-installer --kubeconfig /training/.kube/config \
+    --charts-directory /training/kkp/charts deploy \
+    --config /training/kkp/kubermatic.yaml \
+    --helm-values /training/kkp/values.yaml
 
 # Update Seed Components
-kubermatic-installer --kubeconfig ~/.kube/config --charts-directory ~/kkp/charts deploy kubermatic-seed \
-    --config ~/kkp/kubermatic.yaml \
-    --helm-values ~/kkp/values.yaml
+kubermatic-installer --kubeconfig /training/.kube/config --charts-directory /training/kkp/charts deploy kubermatic-seed \
+    --config /training/kkp/kubermatic.yaml \
+    --helm-values /training/kkp/values.yaml
 ```
 
 ## Verification of Upgrade

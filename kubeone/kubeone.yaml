@@ -10,3 +10,7 @@ cloudProvider:
     regional = true
     multi-zone = true
     token-url = "nil"
+addons:
+  enable: true
+  addons:
+    - name: cluster-autoscaler

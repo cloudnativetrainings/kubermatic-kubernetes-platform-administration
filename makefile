@@ -25,3 +25,4 @@ verify:
 # TODO verify gcp sa permissions
 	echo "Training Environment successfully verified"
 
+.PHONY: teardown

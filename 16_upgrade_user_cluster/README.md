@@ -21,7 +21,7 @@ Note, that there are some requirements to the applications to make that possible
 
 ```bash
 # get the external ip address of the ingress-controller
-kubectl --kubeconfig ~/kubeconfig-admin-XXXXX -n ingress-nginx get svc ingress-nginx-ingress-nginx-controller
+kubectl --kubeconfig /training/kubeconfig-admin-XXXXX -n ingress-nginx get svc ingress-nginx-ingress-nginx-controller
 
 while true; do curl -I http://<EXTERNAL-IP>:80/; sleep 10s; done;
 ```
@@ -45,7 +45,7 @@ versions:
 Apply the updated Kubermatic configuration
 
 ```bash
-kubectl apply -f ~/kkp/kubermatic.yaml
+kubectl apply -f /training/kkp/kubermatic.yaml
 ```
 
 Afterwards you can verify the choosable Kubernetes Versions for your User Cluster also in the KKP UI.
@@ -68,8 +68,8 @@ watch -n 1 kubectl -n cluster-XXXXX get pods
 
 ```bash
 # change the version of the User Clusters MachineDeployment via the following. Change the version of the field `spec.template.spec.versions.kubelet` to `1.29.4`.
-kubectl --kubeconfig ~/kubeconfig-admin-XXXXX -n kube-system edit md XXXXX
+kubectl --kubeconfig /training/kubeconfig-admin-XXXXX -n kube-system edit md XXXXX
 
 # observe the nodes getting upgraded
-watch -n 1 kubectl --kubeconfig ~/kubeconfig-admin-XXXXX get md,ms,machine,nodes -A
+watch -n 1 kubectl --kubeconfig /training/kubeconfig-admin-XXXXX get md,ms,machine,nodes -A
 ```

@@ -6,8 +6,8 @@ In this lab you will create some application definitions. Afterwards those appli
 
 ```bash
 # apply the application definitions
-kubectl apply -f ~/kkp/applications/echoserver.yaml
-kubectl apply -f ~/kkp/applications/ingress-nginx.yaml
+kubectl apply -f /training/kkp/applications/echoserver.yaml
+kubectl apply -f /training/kkp/applications/ingress-nginx.yaml
 
 # verify the application definitions
 kubectl get applicationdefinitions
@@ -26,18 +26,18 @@ You will be able to deploy the applications in your user cluster after ~ 30 seco
 
 ```bash
 # verify the helm releases
-helm --kubeconfig ~/kubeconfig-admin-XXXXX ls -A
+helm --kubeconfig /training/kubeconfig-admin-XXXXX ls -A
 
 # verify the echoserver application
-kubectl --kubeconfig=~/kubeconfig-admin-XXXXX -n echoserver get all
-kubectl --kubeconfig=~/kubeconfig-admin-XXXXX -n echoserver get endpoints
-kubectl --kubeconfig=~/kubeconfig-admin-XXXXX -n echoserver describe ingress echoserver-echoserver-echo-server
+kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n echoserver get all
+kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n echoserver get endpoints
+kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n echoserver describe ingress echoserver-echoserver-echo-server
 
 # verify the ingress-nginx application
-kubectl --kubeconfig ~/kubeconfig-admin-XXXXX -n ingress-nginx get all
+kubectl --kubeconfig /training/kubeconfig-admin-XXXXX -n ingress-nginx get all
 
 # get the external ip address of the ingress-controller
-kubectl --kubeconfig ~/kubeconfig-admin-XXXXX -n ingress-nginx get svc ingress-nginx-ingress-nginx-controller
+kubectl --kubeconfig /training/kubeconfig-admin-XXXXX -n ingress-nginx get svc ingress-nginx-ingress-nginx-controller
 
 # verify the stack via curl
 curl http://<EXTERNAL-IP>:80/ | jq

@@ -3,7 +3,7 @@
 In this lab you will create KKP Master Cluster.
 
 ```bash
-cd ~/02_setup_kkp_master
+cd /training/02_setup_kkp_master
 ```
 
 ## Install KKP
@@ -26,8 +26,8 @@ make setup_kkp_folder
 ### Exchange URLs
 
 ```bash
-sed -i 's/kkp.example.com/'$GCP_DOMAIN'/g' ~/kkp/kubermatic.yaml
-sed -i 's/kkp.example.com/'$GCP_DOMAIN'/g' ~/kkp/values.yaml
+sed -i 's/kkp.example.com/'$GCP_DOMAIN'/g' /training/kkp/kubermatic.yaml
+sed -i 's/kkp.example.com/'$GCP_DOMAIN'/g' /training/kkp/values.yaml
 ```
 
 ### Generate Secrets
@@ -53,7 +53,7 @@ Copy the secret from `dex.clients[kubermaticIssuer].secret` from the file `value
 ### Create static login credentials
 
 ```bash
-sed -i 's/kubermatic@example.com/'$GCP_MAIL'/g' ~/kkp/values.yaml
+sed -i 's/kubermatic@example.com/'$GCP_MAIL'/g' /training/kkp/values.yaml
 
 # hash your password like this
 htpasswd -bnBC 10 "" PASSWORD_HERE | tr -d ':\n' | sed 's/$2y/$2a/'
@@ -64,7 +64,7 @@ htpasswd -bnBC 10 "" PASSWORD_HERE | tr -d ':\n' | sed 's/$2y/$2a/'
 ### Generate uuid for telemetry
 
 ```bash
-sed -i 's/uuid: \"\"/uuid: \"'$(uuidgen -r)'\"/g' ~/kkp/values.yaml
+sed -i 's/uuid: \"\"/uuid: \"'$(uuidgen -r)'\"/g' /training/kkp/values.yaml
 ```
 
 ### Adapt Minio Settings
@@ -84,8 +84,8 @@ minio:
 ## Apply StorageClasses
 
 ```bash
-kubectl apply -f ~/kkp/storageclass-fast.yaml
-kubectl apply -f ~/kkp/storageclass-backup.yaml
+kubectl apply -f /training/kkp/storageclass-fast.yaml
+kubectl apply -f /training/kkp/storageclass-backup.yaml
 ```
 
 Verify the storage class
@@ -97,10 +97,10 @@ kubectl get sc
 ## Install KKP into K1 Cluster
 
 ```bash
-kubermatic-installer --kubeconfig ~/.kube/config \
-    --charts-directory ~/kkp/charts deploy \
-    --config ~/kkp/kubermatic.yaml \
-    --helm-values ~/kkp/values.yaml
+kubermatic-installer --kubeconfig /training/.kube/config \
+    --charts-directory /training/kkp/charts deploy \
+    --config /training/kkp/kubermatic.yaml \
+    --helm-values /training/kkp/values.yaml
 
 # Verify everyting is running smoothly
 # (Note that the pods kubermatic-api-XXXXX will not run smoothly due to DNS is not setup yet)
@@ -115,9 +115,9 @@ For having TLS communication we are using cert-manager.
 
 ```bash
 # Change the email address
-sed -i 's/TODO-STUDENT-EMAIL@cloud-native.training/'$GCP_MAIL'/g' ~/kkp/clusterissuer.yaml
+sed -i 's/TODO-STUDENT-EMAIL@cloud-native.training/'$GCP_MAIL'/g' /training/kkp/clusterissuer.yaml
 
-kubectl apply -f ~/kkp/clusterissuer.yaml
+kubectl apply -f /training/kkp/clusterissuer.yaml
 ```
 
 ### Configure DNS
@@ -143,18 +143,18 @@ nslookup test.$GCP_DOMAIN
 Adapt the settings in the configuration files with the following:
 
 ```bash
-sed -i 's/letsencrypt-staging/letsencrypt-prod/g' ~/kkp/values.yaml
-sed -i 's/letsencrypt-staging/letsencrypt-prod/g' ~/kkp/kubermatic.yaml
-sed -i 's/skipTokenIssuerTLSVerify: true/skipTokenIssuerTLSVerify: false/g' ~/kkp/kubermatic.yaml
+sed -i 's/letsencrypt-staging/letsencrypt-prod/g' /training/kkp/values.yaml
+sed -i 's/letsencrypt-staging/letsencrypt-prod/g' /training/kkp/kubermatic.yaml
+sed -i 's/skipTokenIssuerTLSVerify: true/skipTokenIssuerTLSVerify: false/g' /training/kkp/kubermatic.yaml
 ```
 
 Re-run the installer again
 
 ```bash
-kubermatic-installer --kubeconfig ~/.kube/config \
-    --charts-directory ~/kkp/charts deploy \
-    --config ~/kkp/kubermatic.yaml \
-    --helm-values ~/kkp/values.yaml
+kubermatic-installer --kubeconfig /training/.kube/config \
+    --charts-directory /training/kkp/charts deploy \
+    --config /training/kkp/kubermatic.yaml \
+    --helm-values /training/kkp/values.yaml
 
 # Verify you are obtain valid certificates from LetsEncrypt
 # (Note that it can take up a few minutes to get the certs in ready state)
