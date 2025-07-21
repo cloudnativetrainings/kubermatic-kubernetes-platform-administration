@@ -1,6 +1,6 @@
 {
   "name": "Kubermatic Kubernetes Platform Administration Training Labs",
-  "image": "training-ghcs-kubermatic-kubernetes-platform-administration-trainee-environment:1.0.0",
+  "image": "quay.io/kubermatic-labs/training-ghcs-kubermatic-kubernetes-platform-administration-trainee-environment: 1.0.0",
   "workspaceMount": "source=${localWorkspaceFolder},target=/training/,type=bind",
   "workspaceFolder": "/training/",
   "customizations": {
