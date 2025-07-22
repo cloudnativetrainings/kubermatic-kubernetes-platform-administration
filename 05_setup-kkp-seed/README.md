@@ -62,8 +62,6 @@ nslookup test.kubermatic.$DOMAIN
 
 KKP backups User Clusters regulary. The backups are stored via [minio](https://min.io/). You have to configure minio.
 
-<!-- TODO do I need yq??? maybe should be in base image-->
-
 Change the existing minio settings in the file `/training/kkp/values.yaml` to the following:
 
 ```yaml

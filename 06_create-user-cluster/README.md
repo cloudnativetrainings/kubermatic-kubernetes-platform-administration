@@ -7,7 +7,7 @@ In this lab you will create your first User Cluster.
 Generate a ServiceAccount holding the GCE Credentials via
 
 ```bash
-base64 -w0 base64 -w0 /training/.secrets/gcloud-service-account.json
+base64 -w0 /training/.secrets/gcloud-service-account.json
 ```
 
 - Create a new project via the button `+ Add Project`.

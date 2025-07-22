@@ -6,15 +6,15 @@ In this lab you will install KKP to your local environment.
 >You are not the downloading the latest KKP version for being able to upgrade KKP in a later step.
 
 ```bash
-# set the k1 version
+# set the kkp version
 KKP_VERSION=2.27.5
 
 # download the kkp release
-curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_VERSION/kubermatic-ce-v$KKP_VERSION-linux-amd64.tar.gz --output /training/kubermatic-ce-$KKP_VERSION.tar.gz
+curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_VERSION/kubermatic-ce-v$KKP_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ce-$KKP_VERSION.tar.gz
 
 # unzip kkp release
 mkdir /training/kubermatic-ce-$KKP_VERSION
-tar -xvf /training/kubermatic-ce-$KKP_VERSION.tar.gz -C /training/kubermatic-ce-$KKP_VERSION
+tar -xvf /tmp/kubermatic-ce-$KKP_VERSION.tar.gz -C /training/kubermatic-ce-$KKP_VERSION
 
 # copy `kubermatic-installer` into directory within `$PATH`
 cp /training/kubermatic-ce-$KKP_VERSION/kubermatic-installer /usr/local/bin

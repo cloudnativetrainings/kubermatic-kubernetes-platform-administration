@@ -62,7 +62,6 @@ For having TLS communication we are using cert-manager.
 
 ```bash
 # configure the email address for the clusterissuer
-# TODO email address for clusterissuer via env
 EMAIL=<FILL-IN-YOUR-MAIL-ADDRESS>
 sed -i "s/TODO-STUDENT-EMAIL@cloud-native.training/$EMAIL/g" /training/kkp/clusterissuer.yaml
 
@@ -102,9 +101,7 @@ watch -n 1 kubectl -n kubermatic get pods
 # echo the URL of your running KKP
 echo https://$DOMAIN
 
-# echo the email address
-# TODO
-echo $GCP_MAIL
+# make use of the email address you configured previously
 
 # the password is `password` if you haven't changed it
 ```

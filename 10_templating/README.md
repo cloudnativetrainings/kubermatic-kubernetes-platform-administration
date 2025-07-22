@@ -4,23 +4,19 @@ In this lab you will learn about templating in KKP.
 
 ## Create a Provider Preset
 
-Open the Admin Panel like this:
-
-![](../img/admin_panel.png)
-
-Choose Provider Presets
-
-Create a Preset
-
-1. On the Preset Tab choose a name, eg `gce`
-1. On the Provider Tab choose Google Cloud
-1. In the Settings Tab add the base64 encoded GCE google-sa-key.json (you can get it again via `base64 /training/secrets/google-sa-key.json -w0`)
-
-Verify the preset via CLI
-
 ```bash
+# add the base64 encoded gce serviceaccount to the file `/training/kkp/gce-preset.yaml`
+sed -i "s/TODO/$(base64 -w0 /training/.secrets/gcloud-service-account.json)/g" /training/kkp/gce-preset.yaml
+
+# apply the preset 
+kubectl apply -f /training/kkp/gce-preset.yaml
+
+# verify
 kubectl get preset
 ```
+
+>**NOTE:**
+>You can also manage presets via UI in the `Admin Panel` / `Manage Resources` / `Provider Presets`
 
 ## Create Cluster Template
 
@@ -36,6 +32,13 @@ Verify the ClusterTemplate via CLI
 kubectl get clustertemplate
 ```
 
-### Create Cluster using the Provider Preset and the Cluster Template
+## Make use of templates
 
 Within the UI create a cluster via the button `Create Cluster from Template` and make use of the template created in the previous step.
+
+## Cleanup
+
+```bash
+# delete the cluster again
+kubectl delete cluster XXXXX 
+```

@@ -10,9 +10,6 @@ verify:
 	terraform version
 	kubectx
 	helm version
-	test -n "$(K1_VERSION)"
-	kubeone version
-	test -e /tmp/kubeone_${K1_VERSION}_linux_amd64/
 	test -n "$(GCE_PROJECT)" 
 	test -n "$(TRAINEE_NAME)" 
 	test -n "$(DOMAIN)" 
@@ -26,6 +23,7 @@ verify:
 	test -e /training/.secrets/gcloud-service-account.json 
 # TODO test -v $(GOOGLE_CREDENTIALS)
 # TODO verify gcp sa permissions
+	test -n "$(K1_VERSION)"
+	kubeone version
+	test -e /training/kubeone_${K1_VERSION}_linux_amd64/
 	echo "Training Environment successfully verified"
-
-

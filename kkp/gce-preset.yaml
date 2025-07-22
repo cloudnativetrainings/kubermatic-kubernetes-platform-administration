@@ -1,0 +1,7 @@
+apiVersion: kubermatic.k8c.io/v1
+kind: Preset
+metadata:
+  name: gce
+spec:
+  gcp:
+    serviceAccount: TODO

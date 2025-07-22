@@ -10,9 +10,6 @@ kubectl version --client
 
 # verify terraform is installed
 terraform version
-
-# verify kubeone is installed
-kubeone version
 ```
 
 ### Copy your Training Files
@@ -51,7 +48,6 @@ source /root/.trainingrc
 
 # verify
 echo $GCE_PROJECT
-# TODO GCE_ZONE for gcloud dns stuff (teardown eg)
 echo $TRAINEE_NAME
 echo $DOMAIN
 echo $DNS_ZONE_NAME
@@ -79,7 +75,7 @@ source /root/.trainingrc
 ssh-add -l | grep "$(ssh-keygen -lf /training/.secrets/gce)"
 ```
 
-## Configure gce
+## Configure GCE
 
 ```bash
 # activate gce account
@@ -97,6 +93,31 @@ gcloud config list
 
 # persist the google credentials into an environment variable (needed by terraform and k1)
 echo "export GOOGLE_CREDENTIALS='$(cat /training/.secrets/gcloud-service-account.json)'" >> /root/.trainingrc
+```
+
+## Install KubeOne
+
+```bash
+# set the k1 version
+K1_VERSION=1.11.0
+
+# download the k1 release
+wget -P /tmp/ https://github.com/kubermatic/kubeone/releases/download/v${K1_VERSION}/kubeone_${K1_VERSION}_linux_amd64.zip
+
+# unzip k1 release
+unzip /tmp/kubeone_${K1_VERSION}_linux_amd64.zip -d /training/kubeone_${K1_VERSION}_linux_amd64
+
+# copy k1 into directory within `$PATH`
+cp /training/kubeone_${K1_VERSION}_linux_amd64/kubeone /usr/local/bin
+
+# verify k1 installation
+kubeone version
+
+# add k1 completion to your environment
+echo 'source <(kubeone completion bash)' | tee -a /root/.trainingrc 
+
+# persist the k1 version into an environment variable
+echo "export K1_VERSION=${K1_VERSION}" | tee -a /root/.trainingrc
 ```
 
 ## Verify your environment

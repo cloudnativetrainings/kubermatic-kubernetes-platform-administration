@@ -52,7 +52,6 @@ RANDOM_KEY="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
 sed -i "s/<a-random-key>/$RANDOM_KEY/g" /training/kkp/values.yaml
 
 # configure the user for accessing to KKP UI
-# TODO email address for clusterissuer via env
 EMAIL=<FILL-IN-YOUR-MAIL-ADDRESS>
 sed -i "s/kubermatic@example.com/$EMAIL/g" /training/kkp/values.yaml
 
