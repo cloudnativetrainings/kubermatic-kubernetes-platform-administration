@@ -6,11 +6,11 @@ prepare-tf-config:
 	sed -i "s/<FILL-IN-CLUSTER-NAME>/${TRAINEE_NAME}-k1-cluster/g" /training/k1/tf_infra/terraform.tfvars
 
 .PHONY: terraform
-terraform:
+terraform: prepare-tf-config
 	terraform -chdir=/training/k1/tf_infra init
 	terraform -chdir=/training/k1/tf_infra apply -var=control_plane_target_pool_members_count=1 -auto-approve
 	
 .PHONY: create-cluster
-create-cluster:
+create-cluster: terraform
 	cd /training/k1; kubeone apply -t /training/k1/tf_infra -y --verbose
 	terraform -chdir=/training/k1/tf_infra apply -auto-approve

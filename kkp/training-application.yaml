@@ -22,4 +22,4 @@ spec:
     service:
       type: LoadBalancer
     deployment:
-      replicas: 1
+      replicas: 3

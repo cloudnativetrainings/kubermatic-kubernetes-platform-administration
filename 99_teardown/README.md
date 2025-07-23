@@ -17,9 +17,9 @@ gcloud dns record-sets delete $DOMAIN. --type=A --zone=$DNS_ZONE_NAME
 # destroy the infrastructure provided via terraform
 terraform -chdir=/training/k1/tf_infra/ destroy
 
-# delete minio pvc
-gcloud compute disks delete pvc-XXXXX
-
 # verify no vms are running
 gcloud compute instances list
+
+# delete minio pvc
+gcloud compute disks delete pvc-XXXXX
 ```

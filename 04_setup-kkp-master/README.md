@@ -85,7 +85,7 @@ kubermatic-installer --kubeconfig /root/.kube/config \
 
 # verify you are obtain valid certificates from LetsEncrypt
 # => note that it can take up a few minutes to get the certs in ready state
-kubectl get certs -A
+watch -n 1 kubectl get certs -A
 
 # verify everyting is running smoothly
 # => note that the pods kubermatic-api-XXXXX should be fine
