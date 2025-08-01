@@ -6,10 +6,6 @@
 
 ## oauth lab => k8s Dashboard
 
-## add email address as env var for easier scripting
+# yq instead of sed for complex file substitutions in k1 and kkp
 
-## yq for config file substitution
-
-## before next training
-
-multi trainee test
+# storageclass which get created manualy are not used by the kkpinstaller

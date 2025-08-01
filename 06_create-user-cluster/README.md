@@ -25,7 +25,6 @@ base64 -w0 /training/.secrets/gcloud-service-account.json
     - Set the number of replicas to 3
     - Choose Disk Type `pd-ssd`
     - Choose Machine Type `n1-standard-2`
-    - Check `Preemptible` box
   - Within Tab `Applications`
     - do nothing yet
   - Within Tab `Summary`
