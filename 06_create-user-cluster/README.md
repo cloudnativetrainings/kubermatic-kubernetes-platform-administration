@@ -4,7 +4,7 @@ In this lab you will create your first User Cluster.
 
 ## Create Cluster within UI
 
-Generate a ServiceAccount holding the GCE Credentials via
+For being able to create resources on GCE we need the GCE ServiceAccount encoded in base64. You will learn afterwards how to configure this via a Preset.
 
 ```bash
 base64 -w0 /training/.secrets/gcloud-service-account.json
@@ -33,7 +33,7 @@ base64 -w0 /training/.secrets/gcloud-service-account.json
 >**NOTE:**
 >It will take ~ 5 minutes your cluster will be usable. The control plane of the user cluster will be up very soon, but for the worker nodes VMs have to be provisioned.
 
-## Verify in Terminal
+## Verify in Bash
 
 You will find a new namespace holding all the control plane components of the user cluster
 

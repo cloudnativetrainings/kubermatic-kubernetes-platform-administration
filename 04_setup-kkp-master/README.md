@@ -6,19 +6,6 @@ In this lab you will setup the KKP Master Components into your cluster.
 cd /training/04_setup-kkp-master
 ```
 
-## Apply StorageClasses
-
-```bash
-kubectl apply -f /training/kkp/storageclass-fast.yaml
-kubectl apply -f /training/kkp/storageclass-backup.yaml
-```
-
-Verify the storage class
-
-```bash
-kubectl get sc
-```
-
 ## Install KKP into K1 Cluster
 
 ```bash
@@ -63,7 +50,7 @@ For having TLS communication we are using cert-manager.
 ```bash
 # configure the email address for the clusterissuer
 EMAIL=<FILL-IN-YOUR-MAIL-ADDRESS>
-sed -i "s/TODO-STUDENT-EMAIL@cloud-native.training/$EMAIL/g" /training/kkp/clusterissuer.yaml
+yq ".spec.acme.email = \"$EMAIL\"" -i /training/kkp/clusterissuer.yaml
 
 # apply the clusterissuer
 kubectl apply -f /training/kkp/clusterissuer.yaml
@@ -73,9 +60,9 @@ kubectl apply -f /training/kkp/clusterissuer.yaml
 
 ```bash
 # engage the letsencrypt production clusterissuer in the kkp configuration files
-sed -i 's/letsencrypt-staging/letsencrypt-prod/g' /training/kkp/values.yaml
-sed -i 's/letsencrypt-staging/letsencrypt-prod/g' /training/kkp/kubermatic.yaml
-sed -i 's/skipTokenIssuerTLSVerify: true/skipTokenIssuerTLSVerify: false/g' /training/kkp/kubermatic.yaml
+yq ".spec.ingress.certificateIssuer.name = \"letsencrypt-prod\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.auth.skipTokenIssuerTLSVerify = false" -i /training/kkp/kubermatic.yaml
+yq ".dex.certIssuer.name = \"letsencrypt-prod\"" -i /training/kkp/values.yaml
 
 # re-run the installer again
 kubermatic-installer --kubeconfig /root/.kube/config \

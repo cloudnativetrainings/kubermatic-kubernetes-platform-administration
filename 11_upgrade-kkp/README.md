@@ -74,6 +74,9 @@ kubermatic-installer --kubeconfig /root/.kube/config \
     --charts-directory /training/kkp/charts deploy kubermatic-seed \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
+
+# verify the control plane components of the user cluster gets restarted
+watch -n 1 kubectl -n cluster-XXXXX get pods
 ```
 
 ## Verification of Upgrade

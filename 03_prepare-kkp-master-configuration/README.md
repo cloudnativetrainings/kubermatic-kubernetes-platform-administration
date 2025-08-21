@@ -29,11 +29,11 @@ sed -i "s/kkp.example.com/$DOMAIN/g" /training/kkp/kubermatic.yaml
 
 # configure auth
 RANDOM_KEY="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
-sed -i "s/<a-random-key>/$RANDOM_KEY/g" /training/kkp/kubermatic.yaml
+yq ".spec.auth.issuerCookieKey = \"$RANDOM_KEY\"" -i /training/kkp/kubermatic.yaml
 RANDOM_KEY="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
-sed -i "s/<another-random-key>/$RANDOM_KEY/g" /training/kkp/kubermatic.yaml
+yq ".spec.auth.serviceAccountKey = \"$RANDOM_KEY\"" -i /training/kkp/kubermatic.yaml
 KUBERMATIC_ISSUER_SECRET="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
-sed -i "s/<dex-kubermatic-issuer-oauth-secret-here>/$KUBERMATIC_ISSUER_SECRET/g" /training/kkp/kubermatic.yaml
+yq ".spec.auth.issuerClientSecret = \"$KUBERMATIC_ISSUER_SECRET\"" -i /training/kkp/kubermatic.yaml
 ```
 
 ### Configure the file `/training/kkp/values.yaml`
@@ -42,23 +42,22 @@ sed -i "s/<dex-kubermatic-issuer-oauth-secret-here>/$KUBERMATIC_ISSUER_SECRET/g"
 # configure the domain
 sed -i "s/kkp.example.com/$DOMAIN/g" /training/kkp/values.yaml
 
-# configure the `dex.clients[kubermaticIssuer].secret`
+# configure auth
 # => note that the value has to be exactly the same like in the file `/training/kkp/values.yaml` field `spec.auth.issuerClientSecret`
-echo $KUBERMATIC_ISSUER_SECRET
-# => copy&paste the value into the field `dex.clients[kubermaticIssuer].secret`
-
-# configure the `dex.clients[kubermatic].secret`
+yq ".dex.clients[1].secret = \"$KUBERMATIC_ISSUER_SECRET\"" -i /training/kkp/values.yaml
 RANDOM_KEY="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
-sed -i "s/<a-random-key>/$RANDOM_KEY/g" /training/kkp/values.yaml
+yq ".dex.clients[0].secret = \"$RANDOM_KEY\"" -i /training/kkp/values.yaml
 
 # configure the user for accessing to KKP UI
 EMAIL=<FILL-IN-YOUR-MAIL-ADDRESS>
-sed -i "s/kubermatic@example.com/$EMAIL/g" /training/kkp/values.yaml
+yq ".dex.staticPasswords[0].email = \"$EMAIL\"" -i /training/kkp/values.yaml
 
 # configure the password for accessing to KKP UI (note you should remember the password later ;) )
-htpasswd -bnBC 10 '' <FILL-IN-YOUR-PASSWORD> | tr -d ':\n' | sed 's/$2y/$2a/'
-# => copy&paste the value into the field `dex.staticPasswords[0].hash`
+PASSWORD=<FILL-IN-YOUR-PASSWORD>
+PASSWORD_HASH=$(htpasswd -bnBC 10 '' $PASSWORD | tr -d ':\n' | sed 's/$2y/$2a/')
+yq ".dex.staticPasswords[0].hash = \"$PASSWORD_HASH\"" -i /training/kkp/values.yaml
 
-# generate uuid for telemetry
-sed -i 's/uuid: \"\"/uuid: \"'$(uuidgen -r)'\"/g' /training/kkp/values.yaml
+# configure uuid for telemetry
+UUID=$(uuidgen -r)
+yq ".telemetry.uuid = \"$UUID\"" -i /training/kkp/values.yaml
 ```

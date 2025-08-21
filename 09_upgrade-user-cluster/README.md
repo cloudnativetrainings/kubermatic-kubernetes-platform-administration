@@ -29,12 +29,11 @@ The control plane of your user cluster will be upgraded very fast, due to it is 
 
 Add the following to the file `kubermatic.yaml` in the `spec` section (mind the proper indent):
 
-```yaml
-versions:
-  versions:
-    - v1.32.1
-    - v1.32.4
-  default: "1.32.1"
+```bash
+yq ".spec.versions.versions[0] = \"v1.31.8\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.versions[1] = \"v1.32.1\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.versions[2] = \"v1.32.4\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.default = \"v1.31.8\"" -i /training/kkp/kubermatic.yaml
 ```
 
 Apply the updated Kubermatic configuration
@@ -45,9 +44,9 @@ kubectl apply -f /training/kkp/kubermatic.yaml
 
 Afterwards you can verify the choosable Kubernetes Versions for your User Cluster also in the KKP UI.
 
-## Upgrade of User Cluster via Terminal
+## Upgrade of User Cluster via Bash
 
-Now you will update your User Cluster via terminal. Additionally you will verify the availability of our echoserver application.
+Now you will update your User Cluster via bash. Additionally you will verify the availability of our echoserver application.
 
 ### Upgrade the Control Plane
 

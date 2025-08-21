@@ -65,12 +65,10 @@ KKP backups User Clusters regulary. The backups are stored via [minio](https://m
 Change the existing minio settings in the file `/training/kkp/values.yaml` to the following:
 
 ```yaml
-minio:
-  storeSize: "10Gi"
-  storageClass: kubermatic-backup
-  credentials:
-    accessKey: "reoshe9Eiwei2ku5foB6owiva2Sheeth"
-    secretKey: "rooNgohsh4ohJo7aefoofeiTae4poht0cohxua5eithiexu7quieng5ailoosha8"
+yq ".minio.storeSize = \"10Gi\"" -i /training/kkp/values.yaml
+yq ".minio.storageClass = \"kubermatic-fast\"" -i /training/kkp/values.yaml
+yq ".minio.credentials.accessKey = \"reoshe9Eiwei2ku5foB6owiva2Sheeth\"" -i /training/kkp/values.yaml
+yq ".minio.credentials.secretKey = \"rooNgohsh4ohJo7aefoofeiTae4poht0cohxua5eithiexu7quieng5ailoosha8\"" -i /training/kkp/values.yaml
 ```
 
 ## Re-run the kubermatic-installer

@@ -39,7 +39,21 @@ helm --kubeconfig /training/kubeconfig-admin-XXXXX -n training-application ls
 # verify the application
 kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n training-application get all
 
-# get the external ip of the service
-# => afterwards you can visit the application via your browser http://<EXTERNAL-IP>:80/
-kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n training-application get svc
+# get the IP of the LoadBalancer of the application
+APP_IP=$(kubectl --kubeconfig kubeconfig-admin-XXXXX -n training-application get svc my-app -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+# persist the kkp version into an environment variable
+echo "export APP_IP=${APP_IP}" | tee -a /root/.trainingrc
+
+# ensure value is set in your current bash
+source /root/.trainingrc
+```
+
+## Engate "poor-mans-application-monitoring"
+
+Keep the application running and monitor its availability in a seperate bash.
+
+```bash
+# run this 
+while true; do curl -I http://$APP_IP:80/; sleep 10s; done;
 ```
