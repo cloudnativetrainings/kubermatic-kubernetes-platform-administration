@@ -7,7 +7,7 @@ In this lab you will install KKP to your local environment.
 
 ```bash
 # set the kkp version
-KKP_VERSION=2.27.5
+KKP_VERSION=2.28.1
 
 # download the kkp release
 curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_VERSION/kubermatic-ce-v$KKP_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ce-$KKP_VERSION.tar.gz

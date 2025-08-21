@@ -39,3 +39,9 @@ sed -i 's/cluster-api-autoscaler-node-group-max-size: "1"/cluster-api-autoscaler
 # apply the change
 kubectl apply -f /training/k1/md.yaml
 ```
+
+## Clean-Up
+
+```bash
+cd /training/
+```

@@ -99,7 +99,7 @@ echo "export GOOGLE_CREDENTIALS='$(cat /training/.secrets/gcloud-service-account
 
 ```bash
 # set the k1 version
-K1_VERSION=1.11.0
+K1_VERSION=1.11.1
 
 # download the k1 release
 wget -P /tmp/ https://github.com/kubermatic/kubeone/releases/download/v${K1_VERSION}/kubeone_${K1_VERSION}_linux_amd64.zip

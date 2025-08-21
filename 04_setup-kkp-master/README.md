@@ -2,10 +2,6 @@
 
 In this lab you will setup the KKP Master Components into your cluster.
 
-```bash
-cd /training/04_setup-kkp-master
-```
-
 ## Install KKP into K1 Cluster
 
 ```bash
@@ -62,7 +58,7 @@ kubectl apply -f /training/kkp/clusterissuer.yaml
 # engage the letsencrypt production clusterissuer in the kkp configuration files
 yq ".spec.ingress.certificateIssuer.name = \"letsencrypt-prod\"" -i /training/kkp/kubermatic.yaml
 yq ".spec.auth.skipTokenIssuerTLSVerify = false" -i /training/kkp/kubermatic.yaml
-yq ".dex.certIssuer.name = \"letsencrypt-prod\"" -i /training/kkp/values.yaml
+sed -i "s/letsencrypt-staging/letsencrypt-prod/g" /training/kkp/values.yaml
 
 # re-run the installer again
 kubermatic-installer --kubeconfig /root/.kube/config \

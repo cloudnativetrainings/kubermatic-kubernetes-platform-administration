@@ -2,10 +2,6 @@
 
 In this lab you will create a KKP Seed Cluster.
 
-```bash
-cd /training/05_setup-kkp-seed/
-```
-
 ## Add the Seed kubeconfig to the Master
 
 For the KKP Seed Components being able to communicate with the KKP Master Components you have to create a secret containing the kubeconfig of the Master Cluster. In our case the Seed and Master Components are running in the same cluster.

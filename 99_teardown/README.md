@@ -7,7 +7,7 @@ In this lab you will destroy all infrastructure you have created.
 kubectl delete clusters --all
 
 # reset the cluster
-kubeone reset -m /training/k1/kubeone.yaml -t /training/k1/tf_infra/
+kubeone reset -m /training/k1/kubeone.yaml -t /training/k1/tf_infra/ -y
 
 # delete the gce DNS entries
 gcloud dns record-sets delete *.kubermatic.$DOMAIN. --type=A --zone=$DNS_ZONE_NAME

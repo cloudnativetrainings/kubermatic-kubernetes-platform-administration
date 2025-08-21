@@ -1,15 +1,8 @@
 # Adding Applications to the User Cluster
 
-Besides Addons Kubermatic provides an additional way for enhancing your user clusters with functionalities.
+In this lab you will add your own application [training-application](https://github.com/cloudnativetrainings/training-application) to be deployable int your user clusters.
 
-The difference between Addons and Applications:
-
-- Addons are for low-level capabilities, they are typically maintained by Kubermatic.
-- Applications are for additional tooling on top of the infrastructure. This is where you can manifest your opinion about third party tools on top of Kubernetes.
-
-Further information about addons can be found in the [kkp documentation](https://docs.kubermatic.com/kubermatic/main/architecture/concept/kkp-concepts/applications/).
-
-You will add the [training-application](https://github.com/cloudnativetrainings/training-application) to your user cluster.
+Further information about applications can be found in the [kkp documentation](https://docs.kubermatic.com/kubermatic/main/architecture/concept/kkp-concepts/applications/).
 
 ## Apply the Application Defintions
 
