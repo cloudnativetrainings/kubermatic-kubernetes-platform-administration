@@ -42,7 +42,7 @@ echo "export APP_IP=${APP_IP}" | tee -a /root/.trainingrc
 source /root/.trainingrc
 ```
 
-## Engate "poor-mans-application-monitoring"
+## Engage "poor-mans-application-monitoring"
 
 Keep the application running and monitor its availability in a seperate bash.
 

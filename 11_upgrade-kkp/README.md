@@ -6,7 +6,7 @@ In this lab you will upgrade KKP.
 
 ### Check the Release Notes
 
-Before upgrading KKP please **ALWAYS** take a look into the release notes. Eg for 2.27 you can find them in the [kkp documentation](https://docs.kubermatic.com/kubermatic/v2.27/release-notes/).
+Before upgrading KKP please **ALWAYS** take a look into the release notes. Eg for 2.28 you can find them in the [kkp documentation](https://docs.kubermatic.com/kubermatic/v2.28/release-notes/).
 
 ### Check the supported Kubernetes Versions
 
@@ -35,43 +35,45 @@ kubectl apply -f /training/kkp/kubermatic.yaml
 
 ```bash
 # set the kkp version
-KKP_VERSION=2.28.2
+KKP_INSTALLER_VERSION=2.28.2
 
 # download the kkp release
-curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_VERSION/kubermatic-ce-v$KKP_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ce-$KKP_VERSION.tar.gz
+curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_INSTALLER_VERSION/kubermatic-ce-v$KKP_INSTALLER_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ce-$KKP_INSTALLER_VERSION.tar.gz
 
 # unzip kkp release
-mkdir /training/kubermatic-ce-$KKP_VERSION
-tar -xvf /tmp/kubermatic-ce-$KKP_VERSION.tar.gz -C /training/kubermatic-ce-$KKP_VERSION
+mkdir /training/kubermatic-ce-$KKP_INSTALLER_VERSION
+tar -xvf /tmp/kubermatic-ce-$KKP_INSTALLER_VERSION.tar.gz -C /training/kubermatic-ce-$KKP_INSTALLER_VERSION
 
 # copy `kubermatic-installer` into directory within `$PATH`
-cp /training/kubermatic-ce-$KKP_VERSION/kubermatic-installer /usr/local/bin
+cp /training/kubermatic-ce-$KKP_INSTALLER_VERSION/kubermatic-installer /usr/local/bin
 
 # verify `kubermatic-installer` installation
 kubermatic-installer --version
 
 # persist the kkp version into an environment variable
-echo "export KKP_VERSION=${KKP_VERSION}" | tee -a /root/.trainingrc
+echo "export KKP_INSTALLER_VERSION=${KKP_INSTALLER_VERSION}" | tee -a /root/.trainingrc
 
 # ensure kkp version is set in your current bash
 source /root/.trainingrc
 
 # copy the directory `charts` of the new kkp release
-cp -r /training/kubermatic-ce-$KKP_VERSION/charts /training/kkp/
+cp -r /training/kubermatic-ce-$KKP_INSTALLER_VERSION/charts /training/kkp/
 ```
 
 ## Update KKP
 
 ```bash
 # update master components
-kubermatic-installer --kubeconfig /root/.kube/config \
-    --charts-directory /training/kkp/charts deploy \
+kubermatic-installer deploy \
+    --kubeconfig /root/.kube/config \
+    --charts-directory /training/kkp/charts \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
 
 # update seed components
-kubermatic-installer --kubeconfig /root/.kube/config \
-    --charts-directory /training/kkp/charts deploy kubermatic-seed \
+kubermatic-installer deploy kubermatic-seed \
+    --kubeconfig /root/.kube/config \
+    --charts-directory /training/kkp/charts \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
 

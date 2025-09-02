@@ -6,7 +6,7 @@ In this lab you will adapt the configuration files for installing the KKP Master
 
 ```bash
 # copy the directory `charts` of the kkp release
-cp -r /training/kubermatic-ce-$KKP_VERSION/charts /training/kkp/
+cp -r /training/kubermatic-ce-$KKP_INSTALLER_VERSION/charts /training/kkp/
 ```
 
 ## Configure KKP
@@ -15,7 +15,7 @@ cp -r /training/kubermatic-ce-$KKP_VERSION/charts /training/kkp/
 
 ```bash
 # copy the file `kubermatic.yaml` of the kkp release
-cp /training/kubermatic-ce-$KKP_VERSION/examples/kubermatic.example.yaml /training/kkp/kubermatic.yaml
+cp /training/kubermatic-ce-$KKP_INSTALLER_VERSION/examples/kubermatic.example.yaml /training/kkp/kubermatic.yaml
 
 # configure the domain
 sed -i "s/kkp.example.com/$DOMAIN/g" /training/kkp/kubermatic.yaml
@@ -33,7 +33,7 @@ yq ".spec.auth.issuerClientSecret = \"$KUBERMATIC_ISSUER_SECRET\"" -i /training/
 
 ```bash
 # copy the file `values.yaml` of the kkp release
-cp /training/kubermatic-ce-$KKP_VERSION/examples/values.example.yaml /training/kkp/values.yaml
+cp /training/kubermatic-ce-$KKP_INSTALLER_VERSION/examples/values.example.yaml /training/kkp/values.yaml
 
 # configure the domain
 sed -i "s/kkp.example.com/$DOMAIN/g" /training/kkp/values.yaml

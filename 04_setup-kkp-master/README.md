@@ -5,8 +5,9 @@ In this lab you will setup the KKP Master Components into your cluster.
 ## Install KKP into K1 Cluster
 
 ```bash
-kubermatic-installer --kubeconfig /root/.kube/config \
-    --charts-directory /training/kkp/charts deploy \
+kubermatic-installer deploy \
+    --kubeconfig /root/.kube/config \
+    --charts-directory /training/kkp/charts \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
 
@@ -61,8 +62,9 @@ yq ".spec.auth.skipTokenIssuerTLSVerify = false" -i /training/kkp/kubermatic.yam
 sed -i "s/letsencrypt-staging/letsencrypt-prod/g" /training/kkp/values.yaml
 
 # re-run the installer again
-kubermatic-installer --kubeconfig /root/.kube/config \
-    --charts-directory /training/kkp/charts deploy \
+kubermatic-installer deploy \
+    --kubeconfig /root/.kube/config \
+    --charts-directory /training/kkp/charts \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
 

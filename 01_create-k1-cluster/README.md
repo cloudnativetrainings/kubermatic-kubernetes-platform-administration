@@ -2,15 +2,11 @@
 
 In this lab you will create the Kubernetes Cluster in which we will deploy KKP.
 
-```bash
-cd /training/01_create-k1-cluster/
-```
-
 ## Create Cluster
 
 ```bash
 # create the cluster
-make create-cluster
+make -C /training/k1/ create-cluster
 
 # ensure the downloaded kubeconfig is the default kubeconfig
 mkdir /root/.kube
@@ -38,10 +34,4 @@ sed -i 's/cluster-api-autoscaler-node-group-max-size: "1"/cluster-api-autoscaler
 
 # apply the change
 kubectl apply -f /training/k1/md.yaml
-```
-
-## Clean-Up
-
-```bash
-cd /training/
 ```

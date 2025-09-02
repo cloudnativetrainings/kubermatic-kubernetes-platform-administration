@@ -71,8 +71,9 @@ yq ".minio.credentials.secretKey = \"rooNgohsh4ohJo7aefoofeiTae4poht0cohxua5eith
 
 ```bash
 # re-run the installer with kubermatic-seed option
-kubermatic-installer --kubeconfig /root/.kube/config \
-    --charts-directory /training/kkp/charts deploy kubermatic-seed \
+kubermatic-installer deploy kubermatic-seed \
+    --kubeconfig /root/.kube/config \
+    --charts-directory /training/kkp/charts deploy \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
 ```
