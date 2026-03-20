@@ -21,12 +21,12 @@ cp /training/kubermatic-ce-$KKP_INSTALLER_VERSION/examples/kubermatic.example.ya
 sed -i "s/kkp.example.com/$DOMAIN/g" /training/kkp/kubermatic.yaml
 
 # configure auth
-RANDOM_KEY="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
-yq ".spec.auth.issuerCookieKey = \"$RANDOM_KEY\"" -i /training/kkp/kubermatic.yaml
-RANDOM_KEY="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
-yq ".spec.auth.serviceAccountKey = \"$RANDOM_KEY\"" -i /training/kkp/kubermatic.yaml
-KUBERMATIC_ISSUER_SECRET="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
-yq ".spec.auth.issuerClientSecret = \"$KUBERMATIC_ISSUER_SECRET\"" -i /training/kkp/kubermatic.yaml
+export RANDOM_KEY="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
+yq ".spec.auth.issuerCookieKey = strenv(RANDOM_KEY)" -i /training/kkp/kubermatic.yaml
+export RANDOM_KEY="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
+yq ".spec.auth.serviceAccountKey = strenv(RANDOM_KEY)" -i /training/kkp/kubermatic.yaml
+export KUBERMATIC_ISSUER_SECRET="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
+yq ".spec.auth.issuerClientSecret = strenv(KUBERMATIC_ISSUER_SECRET)" -i /training/kkp/kubermatic.yaml
 ```
 
 ### Configure the file `/training/kkp/values.yaml`
@@ -40,9 +40,9 @@ sed -i "s/kkp.example.com/$DOMAIN/g" /training/kkp/values.yaml
 
 # configure auth
 # => note that the value has to be exactly the same like in the file `/training/kkp/values.yaml` field `spec.auth.issuerClientSecret`
-yq ".dex.config.staticClients[1].secret = \"$KUBERMATIC_ISSUER_SECRET\"" -i /training/kkp/values.yaml
-RANDOM_KEY="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
-yq ".dex.config.staticClients[0].secret = \"$RANDOM_KEY\"" -i /training/kkp/values.yaml
+yq ".dex.config.staticClients[1].secret = strenv(KUBERMATIC_ISSUER_SECRET)" -i /training/kkp/values.yaml
+export RANDOM_KEY="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
+yq ".dex.config.staticClients[0].secret = strenv(RANDOM_KEY)" -i /training/kkp/values.yaml
 
 # configure the user for accessing to KKP UI
 EMAIL=<FILL-IN-YOUR-MAIL-ADDRESS>
@@ -50,7 +50,7 @@ yq ".dex.config.staticPasswords[0].email = \"$EMAIL\"" -i /training/kkp/values.y
 
 # configure the password for accessing to KKP UI (note you should remember the password later ;) )
 PASSWORD=<FILL-IN-YOUR-PASSWORD>
-PASSWORD_HASH=$(htpasswd -bnBC 10 '' $PASSWORD | tr -d ':\n' | sed 's/$2y/$2a/')
+PASSWORD_HASH=$(printf %s "$PASSWORD" | htpasswd -inBC 10 '' | tr -d ':\n' | sed 's/$2y/$2a/')
 yq ".dex.config.staticPasswords[0].hash = \"$PASSWORD_HASH\"" -i /training/kkp/values.yaml
 
 # configure uuid for telemetry
