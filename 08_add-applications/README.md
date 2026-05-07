@@ -1,6 +1,6 @@
 # Adding Applications to the User Cluster
 
-In this lab you will add your own application [training-application](https://github.com/cloudnativetrainings/training-application) to be deployable int your user clusters.
+In this lab you will add your own application [training-application](https://github.com/cloudnativetrainings/training-application) to be deployable in your user clusters.
 
 Further information about applications can be found in the [kkp documentation](https://docs.kubermatic.com/kubermatic/main/architecture/concept/kkp-concepts/applications/).
 

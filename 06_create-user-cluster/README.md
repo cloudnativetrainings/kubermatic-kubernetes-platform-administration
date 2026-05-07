@@ -15,7 +15,7 @@ base64 -w0 /training/.secrets/gcloud-service-account.json
 - Start the cluster creation dialogue via clicking the button `Create Resource / Cluster`
   - Within Tab `Provider`
     - Choose Provider `Google Cloud`
-    - Choose Datecenter `Frankurt`
+    - Choose Datacenter `Frankfurt`
   - Within Tab `Cluster`
     - Generate a random Cluster name
   - Within Tab `Settings`

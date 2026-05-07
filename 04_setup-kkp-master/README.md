@@ -11,7 +11,7 @@ kubermatic-installer deploy \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
 
-# verify everyting is running smoothly
+# verify everything is running smoothly
 # => note that the pods kubermatic-api-XXXXX will not run smoothly due to dns is not setup yet
 watch -n 1 kubectl -n kubermatic get pods
 ```
@@ -68,11 +68,11 @@ kubermatic-installer deploy \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
 
-# verify you are obtain valid certificates from LetsEncrypt
+# verify you obtain valid certificates from LetsEncrypt
 # => note that it can take up a few minutes to get the certs in ready state
 watch -n 1 kubectl get certs -A
 
-# verify everyting is running smoothly
+# verify everything is running smoothly
 # => note that the pods kubermatic-api-XXXXX should be fine
 watch -n 1 kubectl -n kubermatic get pods
 ```
@@ -80,7 +80,7 @@ watch -n 1 kubectl -n kubermatic get pods
 ## Visit your KKP Master Installation
 
 >**IMPORTANT:**
-> You  only installed the master componenents yet, which means the UI is reachable, you cannot create Kubernetes Clusters yet.
+> You only installed the master components yet, which means the UI is reachable, you cannot create Kubernetes Clusters yet.
 
 ```bash
 # echo the URL of your running KKP

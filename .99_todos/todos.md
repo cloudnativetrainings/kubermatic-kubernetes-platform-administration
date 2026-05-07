@@ -2,6 +2,6 @@
 
 - into the tf output
 - set it at beginning
-- to be used for k1/cermanager.yaml (k1 training) and kkp values.yaml
+- to be used for k1/certmanager.yaml (k1 training) and kkp values.yaml
 
 ## oauth lab => k8s Dashboard

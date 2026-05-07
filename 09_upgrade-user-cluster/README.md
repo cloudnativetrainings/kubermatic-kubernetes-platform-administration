@@ -9,8 +9,8 @@ We will also verify if there is a downtime during the upgrade process of the dep
 Note, that there are some requirements to the applications to make that possible:
 
 - The Application has to have a `RollingUpdate` Rollout Stategy.
-- The Application has to have prober liveness and readiness probes set.
-- The Application has to have a prober `terminationGracePeriod`.
+- The Application has to have proper liveness and readiness probes set.
+- The Application has to have a proper `terminationGracePeriod`.
 - The Application has to scaled > 1.
 
 Within the UI upgrade your cluster to version `1.32.6`. Also check the checkbox `Upgrade Machine Deployments`.

@@ -54,7 +54,7 @@ connectors:
 Apply the changes
 
 ```bash
-kubermatic-installer  --kubeconfig ~/.kube/config \
+kubermatic-installer --kubeconfig ~/.kube/config \
     --charts-directory ~/kkp/charts deploy \
     --config ~/kkp/kubermatic.yaml \
     --helm-values ~/kkp/values.yaml

@@ -3,7 +3,7 @@
 In this lab you will install the `kubermatic-installer` to your local environment.
 
 >**NOTE:**
->You are not the downloading the latest kubermatic-installer version for being able to upgrade kubermatic-installer in a later step.
+>You are not downloading the latest kubermatic-installer version for being able to upgrade kubermatic-installer in a later step.
 
 ```bash
 # set the kubermatic-installer version
