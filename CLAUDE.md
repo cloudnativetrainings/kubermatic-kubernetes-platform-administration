@@ -10,7 +10,7 @@ The shared YAML templates and Terraform variables that the labs mutate live in:
 - `k1/` — KubeOne cluster config + Terraform infra (the master/seed cluster)
 - `kkp/` — KKP manifests (`kubermatic.yaml`, `values.yaml`, `seed.yaml`, `clusterissuer.yaml`, `gce-preset.yaml`, `training-application.yaml`)
 
-The top-level `makefile` only defines a `verify` target that asserts the trainee's environment is set up (binaries present, env vars exported, secret files in place). `k1/makefile` wraps the `terraform` + `kubeone apply` flow used in lab 01.
+The top-level `makefile` only defines a `verify` target that asserts the trainee's environment is set up (binaries present, env vars exported, secret files in place). `k1/makefile` wraps the `terraform` + `kubeone apply` flow used in lab 01; lab 99 tears the cluster down directly via `kubeone reset` + `terraform destroy` rather than through that makefile.
 
 ## Execution environment — important
 
@@ -20,7 +20,7 @@ Lab commands assume an exact runtime that does not exist on a developer's host m
 - **Workspace mount**: the repo is bind-mounted at `/training/` inside the container. Every absolute path in the labs (`/training/k1/...`, `/training/kkp/...`, `/training/.secrets/...`, `/training/kubermatic-ce-$KKP_INSTALLER_VERSION/...`) refers to that mount, **not** to the host path. Do not rewrite these paths to host paths — they are part of the trainee's literal copy-paste experience.
 - **Required env vars** (sourced from `/root/.trainingrc`, set up in lab 00): `GCE_PROJECT`, `TRAINEE_NAME`, `DOMAIN`, `DNS_ZONE_NAME`, `K8S_VERSION`, `TF_VERSION`, `K1_VERSION`, `KKP_INSTALLER_VERSION`, `GOOGLE_CREDENTIALS`. The `make verify` target enforces these.
 - **Required secrets** (gitignored, in `/training/.secrets/`): `gce` / `gce.pub` (SSH keypair for KubeOne to reach nodes), `gcloud-service-account.json` (GCE service account JSON, also exported via `GOOGLE_CREDENTIALS`).
-- **Tool versions are pinned in the lab text**: `K1_VERSION=1.11.1`, `KKP_INSTALLER_VERSION=2.28.1` (then upgraded to `2.28.2` in lab 11), Kubernetes `1.32.4` → `1.32.6` → `1.33.2`. These exact strings appear inline in the READMEs.
+- **Tool versions are pinned in the lab text**: `K1_VERSION=1.13.4`, `KKP_INSTALLER_VERSION=2.30.2` (then upgraded to `2.30.3` in lab 11), Kubernetes versions `1.35.1`–`1.35.4` in lab 09. These exact strings appear inline in the READMEs.
 
 The `.claude/settings.json` denies `Read`/`Glob` of `.secrets/**` — respect that, do not try to read service-account JSON or SSH keys.
 
@@ -38,7 +38,7 @@ The numeric prefix is the order; later labs assume earlier labs' state:
 8. `07_add-system-applications` / `08_add-applications` — enable cluster-autoscaler system app; apply `kkp/training-application.yaml` ApplicationDefinition (helm OCI chart from `quay.io/kubermatic-labs/helm-charts`).
 9. `09_upgrade-user-cluster` — pin available versions in `kubermatic.yaml` via `yq`, then upgrade cluster + machinedeployment.
 10. `10_templating` — apply `kkp/gce-preset.yaml` (with base64 SA injected), create ClusterTemplate via UI.
-11. `11_upgrade-kkp` — bump `KKP_INSTALLER_VERSION` to 2.28.2, re-run installer for master and seed.
+11. `11_upgrade-kkp` — remove the pinned `spec.versions` block from `kubermatic.yaml` (`yq del`), bump `KKP_INSTALLER_VERSION` to 2.30.3, re-run installer for master and seed.
 12. `99_teardown` — `kubectl delete clusters --all`, `kubeone reset`, delete DNS records, `terraform destroy`, delete leftover minio PVC disk.
 
 `.99_todos/` contains stub READMEs for unfinished labs (oauth, master/seed/MLA split) — these are author notes, not part of the trainee path. The leading dot hides them from the VS Code file tree (`.devcontainer/devcontainer.json` `files.exclude`).
