@@ -1,6 +1,6 @@
 # Prerequisites
 
-In this lab you will ensure everything is in place to create a kubernetes cluster via kubeone.
+In this lab you will ensure everything is in place to create a Kubernetes cluster via kubeone.
 
 ## Verify installed software
 

@@ -1,6 +1,6 @@
 # Setup KKP Master
 
-In this lab you will setup the KKP Master Components into your cluster.
+In this lab you will set up the KKP Master components in your cluster.
 
 ## Install KKP into K1 Cluster
 

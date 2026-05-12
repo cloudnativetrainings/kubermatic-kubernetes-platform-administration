@@ -6,7 +6,7 @@ In this lab you will add the cluster-autoscaler system application to your User 
 
 ## Enabling the System Application
 
-- Within your cluster click on the tab `Applications` click the button `Add Application`
+- Within your cluster, click on the tab `Applications`, then click the button `Add Application`
   - Select the `Cluster Autoscaler` within the tab `Select Application`
   - Click the button `Next` on the tab `Settings`
   - Click the button `Add Application` on the tab `Application Values`

@@ -96,5 +96,5 @@ watch -n 1 kubectl -n kubermatic get pods
 
 ### Via UI
 
-- Verify the version in the UI, you can find the KKP version number on the left below of the UI.
-- Verify the newly available Kubernetes Versions within your Cluster via the Uprade DropDown.
+- Verify the version in the UI, you can find the KKP version number in the lower left of the UI.
+- Verify the newly available Kubernetes Versions within your Cluster via the Upgrade DropDown.

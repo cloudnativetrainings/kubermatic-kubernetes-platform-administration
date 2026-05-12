@@ -69,7 +69,7 @@ gcloud dns record-sets transaction execute --zone $DNS_ZONE_NAME
 nslookup test.kubermatic.$DOMAIN
 ```
 
-## Setup up minio
+## Set up minio
 
 Components in the seed clusters back up the etcd snapshots of the user clusters regularly. The backups are stored via [minio](https://min.io/). You have to configure minio.
 
@@ -94,4 +94,4 @@ kubermatic-installer deploy kubermatic-seed \
 ```
 
 >**CONGRATS:**
->Congrats your KKP installation is now ready for use!!!
+>Congrats, your KKP installation is now ready for use!!!

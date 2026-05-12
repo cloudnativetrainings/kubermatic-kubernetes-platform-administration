@@ -4,7 +4,7 @@ In this lab you will update your user cluster.
 
 ## Upgrade of User Cluster with UI
 
-We will also verify if there is a downtime during the upgrade process of the deployed applications.
+We will also verify if there is downtime during the upgrade process of the deployed applications.
 
 Note that there are some requirements for the applications to make that possible:
 
