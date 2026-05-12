@@ -7,7 +7,7 @@ In this lab you will install the `kubermatic-installer` to your local environmen
 
 ```bash
 # set the kubermatic-installer version
-KKP_INSTALLER_VERSION=2.28.1
+KKP_INSTALLER_VERSION=2.30.2
 
 # download the kubermatic-installer release
 curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_INSTALLER_VERSION/kubermatic-ce-v$KKP_INSTALLER_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ce-$KKP_INSTALLER_VERSION.tar.gz

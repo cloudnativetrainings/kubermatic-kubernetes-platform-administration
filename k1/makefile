@@ -1,7 +1,8 @@
 
 .PHONY: prepare-tf-config
 prepare-tf-config:
-	cp /training/kubeone_${K1_VERSION}_linux_amd64/examples/terraform/gce/*.tf /training/k1/tf_infra/
+	kubeone init --provider gce --cluster-name ${TRAINEE_NAME}-cluster --path /training/k1/tf_infra
+	cp /training/k1/terraform.tfvars /training/k1/tf_infra/
 	sed -i "s/<FILL-IN-YOUR-GCE-PROJECT-ID>/${GCE_PROJECT}/g" /training/k1/tf_infra/terraform.tfvars
 	sed -i "s/<FILL-IN-CLUSTER-NAME>/${TRAINEE_NAME}-k1-cluster/g" /training/k1/tf_infra/terraform.tfvars
 
@@ -13,4 +14,3 @@ terraform: prepare-tf-config
 .PHONY: create-cluster
 create-cluster: terraform
 	cd /training/k1; kubeone apply -t /training/k1/tf_infra -y --verbose
-	terraform -chdir=/training/k1/tf_infra apply -auto-approve

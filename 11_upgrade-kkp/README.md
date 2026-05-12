@@ -6,7 +6,7 @@ In this lab you will upgrade KKP.
 
 ### Check the Release Notes
 
-Before upgrading KKP please **ALWAYS** take a look into the release notes. Eg for 2.28 you can find them in the [kkp documentation](https://docs.kubermatic.com/kubermatic/v2.28/release-notes/).
+Before upgrading KKP please **ALWAYS** take a look into the release notes. Eg for 2.30 you can find them in the [kkp documentation](https://docs.kubermatic.com/kubermatic/v2.30/release-notes/).
 
 ### Check the supported Kubernetes Versions
 
@@ -25,17 +25,21 @@ versions:
   default: "1.29.1"
 ```
 
+```bash
+yq "del(.spec.versions)" -i /training/kkp/kubermatic.yaml
+```
+
 And apply this change again.
 
 ```bash
 kubectl apply -f /training/kkp/kubermatic.yaml
 ```
 
-## Install the new KKP version
+## Install the new KKP Installer
 
 ```bash
-# set the kkp version
-KKP_INSTALLER_VERSION=2.28.2
+# set the kkp-installer version
+KKP_INSTALLER_VERSION=2.30.3
 
 # download the kkp release
 curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_INSTALLER_VERSION/kubermatic-ce-v$KKP_INSTALLER_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ce-$KKP_INSTALLER_VERSION.tar.gz

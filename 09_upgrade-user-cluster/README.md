@@ -13,7 +13,7 @@ Note, that there are some requirements to the applications to make that possible
 - The Application has to have a proper `terminationGracePeriod`.
 - The Application has to scaled > 1.
 
-Within the UI upgrade your cluster to version `1.32.6`. Also check the checkbox `Upgrade Machine Deployments`.
+Within the UI upgrade your cluster to version `1.35.3`. Also check the checkbox `Upgrade Machine Deployments`.
 
 The control plane of your user cluster will be upgraded very fast, due to it is only about starting new containers. The worker nodes will need about ~ 5 minutes to get updated, due to this is about starting new VMs.
 
@@ -22,10 +22,11 @@ The control plane of your user cluster will be upgraded very fast, due to it is 
 Add the following to the file `kubermatic.yaml` in the `spec` section (mind the proper indent):
 
 ```bash
-yq ".spec.versions.versions[0] = \"v1.32.4\"" -i /training/kkp/kubermatic.yaml
-yq ".spec.versions.versions[1] = \"v1.32.6\"" -i /training/kkp/kubermatic.yaml
-yq ".spec.versions.versions[2] = \"v1.33.2\"" -i /training/kkp/kubermatic.yaml
-yq ".spec.versions.default = \"v1.32.4\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.versions[0] = \"v1.35.1\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.versions[1] = \"v1.35.2\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.versions[2] = \"v1.35.3\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.versions[3] = \"v1.35.4\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.default = \"v1.35.3\"" -i /training/kkp/kubermatic.yaml
 ```
 
 Apply the updated Kubermatic configuration
@@ -43,7 +44,7 @@ Now you will update your User Cluster via bash. Additionally you will verify the
 ### Upgrade the Control Plane
 
 ```bash
-# change the field `spec.version` of the User Cluster to `1.33.2`.
+# change the field `spec.version` of the User Cluster to `1.35.4`.
 kubectl edit cluster XXXXX
 
 # verify the rollout
@@ -53,7 +54,7 @@ watch -n 1 kubectl -n cluster-XXXXX get pods
 ### Upgrade the Worker Nodes
 
 ```bash
-# change the version of the User Clusters MachineDeployment via the following. Change the version of the field `spec.template.spec.versions.kubelet` to `1.33.2`.
+# change the version of the User Clusters MachineDeployment via the following. Change the version of the field `spec.template.spec.versions.kubelet` to `1.35.4`.
 kubectl --kubeconfig /training/kubeconfig-admin-XXXXX -n kube-system edit md XXXXX
 
 # observe the nodes getting upgraded

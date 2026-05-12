@@ -4,7 +4,16 @@ In this lab you will create a KKP Seed Cluster.
 
 ## Add the Seed kubeconfig to the Master
 
-For the KKP Seed Components being able to communicate with the KKP Master Components you have to create a secret containing the kubeconfig of the Master Cluster. In our case the Seed and Master Components are running in the same cluster.
+Components running in the master cluster have to be able to talk to the seed clusters for
+
+- managing user clusters
+- getting health information about the user clusters
+- getting the kubeconfigs
+- distrubte global configuration like Presets, Application Definitions, Templates,...
+
+Therefore the seed has to be configured in the master cluster.
+
+In our case the Seed and Master Components are running in the same cluster.
 
 ```bash
 # copy the existing kubeconfig to a new file
@@ -36,7 +45,13 @@ watch -n 1 kubectl -n kubermatic get pods
 
 ## Create DNS entries for Seed
 
-Also the communication from the Master Components towards the Control Plane components of the User Clusters, running in the Seed Cluster, has to be encrypted. Therefore we configure a new wildcard DNS entry.
+The apiservers of the user clusters have to be reachable for
+
+- kubernetes components of the user clusters running outside of the controlplane, eg the kubelets on the worker nodes
+- clients like kubectl
+- from master cluster components when master and seed are separate clusters
+
+Therefore you have to make use of the nodeport proxy which exposes the apiservers of the user clusters.
 
 ```bash
 # store IP of NodePort Proxy into environment variable
@@ -56,7 +71,7 @@ nslookup test.kubermatic.$DOMAIN
 
 ## Setup up minio
 
-KKP backups User Clusters regularly. The backups are stored via [minio](https://min.io/). You have to configure minio.
+Components in the seed clusters backup the etcd snapshots of the user clusters regularly. The backups are stored via [minio](https://min.io/). You have to configure minio.
 
 Change the existing minio settings in the file `/training/kkp/values.yaml` to the following:
 

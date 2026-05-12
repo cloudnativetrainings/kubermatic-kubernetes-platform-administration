@@ -1,4 +1,4 @@
-# Advanced Operations of Kubernetes with KubeOne
+# Kubermatic Kubernetes Platform
 
 In this training you will learn how to use KubeOne to provision Kubernetes Clusters.
 

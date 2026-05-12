@@ -36,10 +36,3 @@ kubectl get clustertemplate
 ## Make use of templates
 
 Within the UI create a cluster via the button `Create Cluster from Template` and make use of the template created in the previous step.
-
-## Cleanup
-
-```bash
-# delete the new cluster again, for keeping GCE costs low
-kubectl delete cluster XXXXX 
-```

@@ -22,7 +22,7 @@ base64 -w0 /training/.secrets/gcloud-service-account.json
     - Copy the base64 encoded GCE google-sa-key.json in the field `Service Account`
   - Within Tab `Initial Nodes`
     - Generate a random MachineDeployment name
-    - Set the number of replicas to 3
+    - Set the number of replicas to 1
     - Choose Disk Type `pd-ssd`
     - Choose Machine Type `n1-standard-2`
   - Within Tab `Applications`
@@ -42,6 +42,9 @@ kubectl get ns
 
 # see all the control plane components of the cluster
 watch -n 1 kubectl -n cluster-XXXXX get pods
+
+# you can watch the machine-controller of the cluster provisioning a worker node
+kubectl -n cluster-XXX logs -f machine-controller-XXX
 ```
 
 ## Connect to the User Cluster
