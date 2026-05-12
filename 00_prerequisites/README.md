@@ -55,7 +55,7 @@ echo $DNS_ZONE_NAME
 
 ## Ensure SSH requirements
 
-Kubeone needs a ssh key pair for communicating with the controlplane and worker nodes.
+KubeOne needs an SSH key pair for communicating with the control plane and worker nodes.
 
 ```bash
 # create a ssh-key-pair for gce

@@ -42,7 +42,7 @@ nslookup test.$DOMAIN
 
 ### Apply the Production Cert-Manager ClusterIssuer
 
-For having TLS communication we are using cert-manager.
+To enable TLS communication, we use cert-manager.
 
 ```bash
 # configure the email address for the clusterissuer
@@ -80,7 +80,7 @@ watch -n 1 kubectl -n kubermatic get pods
 ## Visit your KKP Master Installation
 
 >**IMPORTANT:**
-> You only installed the master components yet, which means the UI is reachable, you cannot create Kubernetes Clusters yet.
+> You have only installed the master components so far; the UI is reachable, but you cannot create Kubernetes Clusters yet.
 
 ```bash
 # echo the URL of your running KKP

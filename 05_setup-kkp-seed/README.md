@@ -9,7 +9,7 @@ Components running in the master cluster have to be able to talk to the seed clu
 - managing user clusters
 - getting health information about the user clusters
 - getting the kubeconfigs
-- distrubte global configuration like Presets, Application Definitions, Templates,...
+- distributing global configuration like Presets, Application Definitions, Templates,...
 
 Therefore the seed has to be configured in the master cluster.
 
@@ -47,7 +47,7 @@ watch -n 1 kubectl -n kubermatic get pods
 
 The apiservers of the user clusters have to be reachable for
 
-- kubernetes components of the user clusters running outside of the controlplane, eg the kubelets on the worker nodes
+- Kubernetes components of the user clusters running outside of the control plane, e.g. the kubelets on the worker nodes
 - clients like kubectl
 - from master cluster components when master and seed are separate clusters
 
@@ -71,7 +71,7 @@ nslookup test.kubermatic.$DOMAIN
 
 ## Setup up minio
 
-Components in the seed clusters backup the etcd snapshots of the user clusters regularly. The backups are stored via [minio](https://min.io/). You have to configure minio.
+Components in the seed clusters back up the etcd snapshots of the user clusters regularly. The backups are stored via [minio](https://min.io/). You have to configure minio.
 
 Change the existing minio settings in the file `/training/kkp/values.yaml` to the following:
 

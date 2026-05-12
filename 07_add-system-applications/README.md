@@ -1,6 +1,6 @@
 # Adding System Applications to the User Cluster
 
-Kubermatic provides some useful extensions for User Clusters out of the box. Further information about system application can be found in the [kkp documentation](https://docs.kubermatic.com/kubermatic/main/architecture/concept/kkp-concepts/applications/default-applications-catalog/).
+Kubermatic provides some useful extensions for User Clusters out of the box. Further information about system applications can be found in the [kkp documentation](https://docs.kubermatic.com/kubermatic/main/architecture/concept/kkp-concepts/applications/default-applications-catalog/).
 
 In this lab you will add the cluster-autoscaler system application to your User Cluster.
 

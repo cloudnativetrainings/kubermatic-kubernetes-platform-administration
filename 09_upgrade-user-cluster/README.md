@@ -6,16 +6,16 @@ In this lab you will update your user cluster.
 
 We will also verify if there is a downtime during the upgrade process of the deployed applications.
 
-Note, that there are some requirements to the applications to make that possible:
+Note that there are some requirements for the applications to make that possible:
 
-- The Application has to have a `RollingUpdate` Rollout Stategy.
+- The Application has to have a `RollingUpdate` Rollout Strategy.
 - The Application has to have proper liveness and readiness probes set.
 - The Application has to have a proper `terminationGracePeriod`.
-- The Application has to scaled > 1.
+- The Application has to be scaled > 1.
 
 Within the UI upgrade your cluster to version `1.35.3`. Also check the checkbox `Upgrade Machine Deployments`.
 
-The control plane of your user cluster will be upgraded very fast, due to it is only about starting new containers. The worker nodes will need about ~ 5 minutes to get updated, due to this is about starting new VMs.
+The control plane of your user cluster will be upgraded very fast, because it is only about starting new containers. The worker nodes will need about ~ 5 minutes to get updated, because this is about starting new VMs.
 
 ## Manage the available Kubernetes versions
 
@@ -35,7 +35,7 @@ Apply the updated Kubermatic configuration
 kubectl apply -f /training/kkp/kubermatic.yaml
 ```
 
-Afterwards you can verify the choosable Kubernetes Versions for your User Cluster also in the KKP UI.
+Afterwards you can also verify the available Kubernetes versions for your User Cluster in the KKP UI.
 
 ## Upgrade of User Cluster via Bash
 

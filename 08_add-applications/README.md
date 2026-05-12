@@ -4,7 +4,7 @@ In this lab you will add your own application [training-application](https://git
 
 Further information about applications can be found in the [kkp documentation](https://docs.kubermatic.com/kubermatic/main/architecture/concept/kkp-concepts/applications/).
 
-## Apply the Application Defintions
+## Apply the Application Definitions
 
 ```bash
 # apply the application definitions
@@ -44,7 +44,7 @@ source /root/.trainingrc
 
 ## Engage "poor-mans-application-monitoring"
 
-Keep the application running and monitor its availability in a seperate bash.
+Keep the application running and monitor its availability in a separate bash.
 
 ```bash
 # run this 

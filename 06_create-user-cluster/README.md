@@ -12,7 +12,7 @@ base64 -w0 /training/.secrets/gcloud-service-account.json
 
 - Create a new project via the button `+ Add Project`.
 - Choose the project.
-- Start the cluster creation dialogue via clicking the button `Create Resource / Cluster`
+- Start the cluster creation dialogue by clicking the button `Create Resource / Cluster`
   - Within Tab `Provider`
     - Choose Provider `Google Cloud`
     - Choose Datacenter `Frankfurt`
@@ -31,7 +31,7 @@ base64 -w0 /training/.secrets/gcloud-service-account.json
     - Click the button `Create Cluster`
 
 >**NOTE:**
->It will take ~ 5 minutes your cluster will be usable. The control plane of the user cluster will be up very soon, but for the worker nodes VMs have to be provisioned.
+>It will take ~ 5 minutes until your cluster is usable. The control plane of the user cluster will be up very soon, but the worker node VMs still have to be provisioned.
 
 ## Verify in Bash
 
@@ -49,7 +49,7 @@ kubectl -n cluster-XXX logs -f machine-controller-XXX
 
 ## Connect to the User Cluster
 
-Download the kubeconfig via the button `Get Kubeconfig` on the right above within the cluster in the KKP UI.
+Download the kubeconfig via the `Get Kubeconfig` button at the top right of the cluster page in the KKP UI.
 
 Drag&Drop the downloaded kubeconfig into the Google Cloud Shell.
 
@@ -61,7 +61,7 @@ kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX get nodes
 
 ## Test the resiliency of a User Cluster
 
-Now we will check what happens if a component of the users clusters control plane has an issue.
+Now we will check what happens if a component of the user cluster's control plane has an issue.
 
 ```bash
 # delete one of the etcd nodes
@@ -72,7 +72,7 @@ watch -n 1 kubectl -n cluster-XXXXX get pods
 ```
 
 >**NOTE:**
->Due to KKP makes use of HA functionality within Kubernetes such incidents get auto-healed.
+>Because KKP makes use of HA functionality within Kubernetes, such incidents get auto-healed.
 
 ## Scale the User Cluster
 

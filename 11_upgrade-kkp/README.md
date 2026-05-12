@@ -6,14 +6,14 @@ In this lab you will upgrade KKP.
 
 ### Check the Release Notes
 
-Before upgrading KKP please **ALWAYS** take a look into the release notes. Eg for 2.30 you can find them in the [kkp documentation](https://docs.kubermatic.com/kubermatic/v2.30/release-notes/).
+Before upgrading KKP please **ALWAYS** take a look into the release notes. E.g. for 2.30, you can find them in the [kkp documentation](https://docs.kubermatic.com/kubermatic/v2.30/release-notes/).
 
 ### Check the supported Kubernetes Versions
 
 Furthermore we will remove our Kubernetes Versions Settings again, to go with the defaults. You can find the supported versions [here](https://docs.kubermatic.com/kubermatic/main/architecture/compatibility/supported-versions/).
 
 >**NOTE:**
->Each KKP version supports a specific set of Kubernetes versions. Therefore the setting from the previous step can be problematic. For keeping things easy we simply delete this configuration.
+>Each KKP version supports a specific set of Kubernetes versions. Therefore the setting from the previous step can be problematic. To keep things simple, we simply delete this configuration.
 
 Remove the following in the file `kubermatic.yaml` in the `spec` section:
 

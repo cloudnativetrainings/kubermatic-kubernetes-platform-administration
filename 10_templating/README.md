@@ -22,10 +22,10 @@ kubectl get preset
 ## Create Cluster Template
 
 1. Create a new cluster via the UI.
-1. Make use of the Provider Preset `gce` in the tab `Settings` you have created in the previous step.
+1. In the tab `Settings`, make use of the Provider Preset `gce` you have created in the previous step.
 1. You can also add Default Applications into your ClusterTemplate in the tab `Applications`.
 1. Instead of clicking the button `Create Cluster` click the button `Save Cluster Template` in the tab `Summary`.
-1. Give the template a proper name and save it eg on scope `Project`.
+1. Give the template a proper name and save it, e.g. on scope `Project`.
 
 Verify the ClusterTemplate via CLI
 
