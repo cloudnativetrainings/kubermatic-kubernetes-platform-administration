@@ -17,14 +17,6 @@ Furthermore we will remove our Kubernetes Versions Settings again, to go with th
 
 Remove the following in the file `kubermatic.yaml` in the `spec` section:
 
-```yaml
-versions:
-  versions:
-    - v1.29.1
-    - v1.29.4
-  default: "1.29.1"
-```
-
 ```bash
 yq "del(.spec.versions)" -i /training/kkp/kubermatic.yaml
 ```

@@ -28,7 +28,9 @@
           ".devcontainer/": true,
           ".99_todos/": true,
           "teardown.sh": true,
-          "makefile": true
+          "makefile": true,
+          "CLAUDE.md": true,
+          ".claude/": true,
         }
       }
     }

@@ -13,3 +13,9 @@ https://www.kubermatic.com/blog/meet-kkp-2-30-more-support-for-ai-workloads-gate
 ## clustertemplate/clustertemplateinstance/cluster/preset
 
 explain via slides -> where do they live? (on the master)
+
+## fill in password
+
+does not work with special characters
+
+## create the seed-kubeconfig via kubermatic-installer
