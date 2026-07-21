@@ -4,7 +4,7 @@ In this lab you will create your first User Cluster.
 
 ## Create Cluster within UI
 
-For being able to create resources on GCE we need the GCE ServiceAccount encoded in base64. You will learn afterwards how to configure this via a Preset.
+To be able to create resources on GCE, we need the GCE ServiceAccount encoded in base64. You will learn afterwards how to configure this via a Preset.
 
 ```bash
 base64 -w0 /training/.secrets/gcloud-service-account.json
@@ -51,7 +51,7 @@ kubectl -n cluster-XXX logs -f machine-controller-XXX
 
 Download the kubeconfig via the `Get Kubeconfig` button at the top right of the cluster page in the KKP UI.
 
-Drag&Drop the downloaded kubeconfig into the Google Cloud Shell.
+Drag and Drop the downloaded kubeconfig into the Google Cloud Shell.
 
 Connect to the User Cluster
 

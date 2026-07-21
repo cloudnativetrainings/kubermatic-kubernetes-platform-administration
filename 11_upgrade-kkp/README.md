@@ -6,7 +6,7 @@ In this lab you will upgrade KKP.
 
 ### Check the Release Notes
 
-Before upgrading KKP please **ALWAYS** take a look into the release notes. E.g. for 2.30, you can find them in the [kkp documentation](https://docs.kubermatic.com/kubermatic/v2.30/release-notes/).
+Before upgrading KKP please **ALWAYS** take a look at the release notes. E.g. for 2.30, you can find them in the [kkp documentation](https://docs.kubermatic.com/kubermatic/v2.30/release-notes/).
 
 ### Check the supported Kubernetes Versions
 

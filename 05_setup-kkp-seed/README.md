@@ -9,7 +9,7 @@ Components running in the master cluster have to be able to talk to the seed clu
 - managing user clusters
 - getting health information about the user clusters
 - getting the kubeconfigs
-- distributing global configuration like Presets, Application Definitions, Templates,...
+- distributing global configuration like Presets, Application Definitions, Templates, etc.
 
 Therefore the seed has to be configured in the master cluster.
 

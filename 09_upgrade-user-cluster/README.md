@@ -19,7 +19,7 @@ The control plane of your user cluster will be upgraded very fast, because it is
 
 ## Manage the available Kubernetes versions
 
-Add the following to the file `kubermatic.yaml` in the `spec` section (mind the proper indent):
+Add the following to the file `kubermatic.yaml` in the `spec` section (mind the proper indentation):
 
 ```bash
 yq ".spec.versions.versions[0] = \"v1.35.1\"" -i /training/kkp/kubermatic.yaml
@@ -39,7 +39,7 @@ Afterwards you can also verify the available Kubernetes versions for your User C
 
 ## Upgrade of User Cluster via Bash
 
-Now you will update your User Cluster via bash. Additionally you will verify the availability of our echoserver application.
+Now you will update your User Cluster via bash. Additionally you will verify the availability of our training-application application.
 
 ### Upgrade the Control Plane
 
