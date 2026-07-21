@@ -31,7 +31,7 @@ kubectl apply -f /training/kkp/kubermatic.yaml
 
 ```bash
 # set the kkp-installer version
-KKP_INSTALLER_VERSION=2.30.3
+KKP_INSTALLER_VERSION=2.30.5
 
 # download the kkp release
 curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_INSTALLER_VERSION/kubermatic-ce-v$KKP_INSTALLER_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ce-$KKP_INSTALLER_VERSION.tar.gz

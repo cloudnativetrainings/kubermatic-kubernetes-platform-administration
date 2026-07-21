@@ -19,3 +19,7 @@ explain via slides -> where do they live? (on the master)
 does not work with special characters
 
 ## create the seed-kubeconfig via kubermatic-installer
+
+# clean up
+
+kubeone reset --cleanup-volumes --cleanup-load-balancers
