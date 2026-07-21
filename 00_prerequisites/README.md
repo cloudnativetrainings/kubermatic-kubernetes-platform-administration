@@ -21,27 +21,21 @@ mkdir /training/.secrets
 
 Drag and Drop the files (provided by the trainer) into the directory `/training/.secrets/`
 
+- environment.sh
 - README.md
 - gcloud-service-account.json
 
 ## Set important environment variables
 
 > **IMPORTANT:**
-> Those variables will be referenced during the following labs. Make sure to set them before continuing.
-> You can find the needed information in the file `/training/.secrets/README.md`
+> These variables will get referenced during the following labs. Make sure to set them before continuing. You can find the needed information in the file `/training/.secrets/README.md`, but, for convenience, there is also a shell script which will persist the environment variables in the file `/root/.trainingrc`.
 
 ```bash
-# persist the project id into an environment variable
-echo "export GCE_PROJECT=<FILL-IN-GOOGLE-PROJECT-ID>" >> /root/.trainingrc
+# make the shell script executable
+chmod 0700 /training/.secrets/environment.sh
 
-# persist your trainee name into an environment variable
-echo "export TRAINEE_NAME=<FILL-IN-TRAINEE-NAME>" >> /root/.trainingrc
-
-# persist your domain into an environment variable
-echo "export DOMAIN=<FILL-IN-DOMAIN>" >> /root/.trainingrc
-
-# persist your domain into an environment variable
-echo "export DNS_ZONE_NAME=<FILL-IN-DNS-ZONE-NAME>" >> /root/.trainingrc
+# persist the environment variables into the file /root/.trainingrc
+/training/.secrets/environment.sh
 
 # ensure changes are applied in your current bash
 source /root/.trainingrc

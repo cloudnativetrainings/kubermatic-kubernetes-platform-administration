@@ -6,7 +6,7 @@ In this lab you will adapt the configuration files for installing the KKP Master
 
 ```bash
 # copy the directory `charts` of the kkp release
-cp -r /training/kubermatic-ce-$KKP_INSTALLER_VERSION/charts /training/kkp/
+cp -r /training/kubermatic-ee-$KKP_INSTALLER_VERSION/charts /training/kkp/
 ```
 
 ## Configure KKP
@@ -15,7 +15,7 @@ cp -r /training/kubermatic-ce-$KKP_INSTALLER_VERSION/charts /training/kkp/
 
 ```bash
 # copy the file `kubermatic.yaml` of the kkp release
-cp /training/kubermatic-ce-$KKP_INSTALLER_VERSION/examples/kubermatic.example.yaml /training/kkp/kubermatic.yaml
+cp /training/kubermatic-ee-$KKP_INSTALLER_VERSION/examples/kubermatic.example.yaml /training/kkp/kubermatic.yaml
 
 # configure the domain
 sed -i "s/kkp.example.com/$DOMAIN/g" /training/kkp/kubermatic.yaml
@@ -33,7 +33,7 @@ yq ".spec.auth.issuerClientSecret = strenv(KUBERMATIC_ISSUER_SECRET)" -i /traini
 
 ```bash
 # copy the file `values.yaml` of the kkp release
-cp /training/kubermatic-ce-$KKP_INSTALLER_VERSION/examples/values.example.yaml /training/kkp/values.yaml
+cp /training/kubermatic-ee-$KKP_INSTALLER_VERSION/examples/values.example.yaml /training/kkp/values.yaml
 
 # configure the domain
 sed -i "s/kkp.example.com/$DOMAIN/g" /training/kkp/values.yaml
@@ -56,7 +56,17 @@ yq ".dex.config.staticPasswords[0].hash = \"$PASSWORD_HASH\"" -i /training/kkp/v
 # configure uuid for telemetry
 UUID=$(uuidgen -r)
 yq ".telemetry.uuid = \"$UUID\"" -i /training/kkp/values.yaml
+```
 
-# remove the credentials for the EE version of kkp
-yq 'del(.kubermaticOperator)' -i /training/kkp/values.yaml
+### Configure the EE pull credentials
+
+```bash
+# set <PULL_CREDENTIALS>
+PULL_CREDENTIALS=<FILL-IN-THE-PULL-CREDENTIALS-PROVIDED-BY-THE-TRAINER>
+echo "export PULL_CREDENTIALS=$PULL_CREDENTIALS" >> /root/.trainingrc
+source /root/.trainingrc
+
+# configure the pull credentials in the configuration files
+sed -i "s/<your-auth-token>/$PULL_CREDENTIALS/g" /training/kkp/kubermatic.yaml
+sed -i "s/<your-auth-token>/$PULL_CREDENTIALS/g" /training/kkp/values.yaml
 ```

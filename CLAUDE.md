@@ -7,6 +7,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 A hands-on training course teaching administration of Kubermatic Kubernetes Platform (KKP) on top of a KubeOne-provisioned cluster on GCE. It is **not** an application codebase — it is a set of numbered lab directories (`00_prerequisites` … `11_upgrade-kkp`, plus `99_teardown`) whose `README.md` files are the training material. Each README is a sequence of `bash`/`kubectl`/`yq`/`gcloud`/`kubeone`/`kubermatic-installer` commands that the trainee copy-pastes in order.
 
 The shared YAML templates and Terraform variables that the labs mutate live in:
+
 - `k1/` — KubeOne cluster config + Terraform infra (the master/seed cluster)
 - `kkp/` — KKP manifests (`kubermatic.yaml`, `values.yaml`, `seed.yaml`, `clusterissuer.yaml`, `gce-preset.yaml`, `training-application.yaml`)
 
@@ -17,7 +18,7 @@ The top-level `makefile` only defines a `verify` target that asserts the trainee
 Lab commands assume an exact runtime that does not exist on a developer's host machine:
 
 - **Devcontainer image**: `quay.io/kubermatic-labs/training-ghcs-kubermatic-kubernetes-platform-administration-trainee-environment:1.0.0` (see `.devcontainer/devcontainer.json`). Designed for GitHub Codespaces; `remoteUser` is `root`.
-- **Workspace mount**: the repo is bind-mounted at `/training/` inside the container. Every absolute path in the labs (`/training/k1/...`, `/training/kkp/...`, `/training/.secrets/...`, `/training/kubermatic-ce-$KKP_INSTALLER_VERSION/...`) refers to that mount, **not** to the host path. Do not rewrite these paths to host paths — they are part of the trainee's literal copy-paste experience.
+- **Workspace mount**: the repo is bind-mounted at `/training/` inside the container. Every absolute path in the labs (`/training/k1/...`, `/training/kkp/...`, `/training/.secrets/...`, `/training/kubermatic-ee-$KKP_INSTALLER_VERSION/...`) refers to that mount, **not** to the host path. Do not rewrite these paths to host paths — they are part of the trainee's literal copy-paste experience.
 - **Required env vars** (sourced from `/root/.trainingrc`, set up in lab 00): `GCE_PROJECT`, `TRAINEE_NAME`, `DOMAIN`, `DNS_ZONE_NAME`, `K8S_VERSION`, `TF_VERSION`, `K1_VERSION`, `KKP_INSTALLER_VERSION`, `GOOGLE_CREDENTIALS`. The `make verify` target enforces these.
 - **Required secrets** (gitignored, in `/training/.secrets/`): `gce` / `gce.pub` (SSH keypair for KubeOne to reach nodes), `gcloud-service-account.json` (GCE service account JSON, also exported via `GOOGLE_CREDENTIALS`).
 - **Tool versions are pinned in the lab text**: `K1_VERSION=1.13.4`, `KKP_INSTALLER_VERSION=2.30.2` (then upgraded to `2.30.3` in lab 11), Kubernetes versions `1.35.1`–`1.35.4` in lab 09. These exact strings appear inline in the READMEs.

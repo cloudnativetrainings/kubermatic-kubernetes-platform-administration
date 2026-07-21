@@ -5,6 +5,7 @@ prepare-tf-config:
 	cp /training/k1/terraform.tfvars /training/k1/tf_infra/
 	sed -i "s/<FILL-IN-YOUR-GCE-PROJECT-ID>/${GCE_PROJECT}/g" /training/k1/tf_infra/terraform.tfvars
 	sed -i "s/<FILL-IN-CLUSTER-NAME>/${TRAINEE_NAME}-k1-cluster/g" /training/k1/tf_infra/terraform.tfvars
+	rm /training/k1/tf_infra/kubeone.yaml
 
 .PHONY: terraform
 terraform: prepare-tf-config

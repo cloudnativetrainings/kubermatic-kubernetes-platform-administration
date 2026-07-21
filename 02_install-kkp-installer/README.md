@@ -10,14 +10,14 @@ In this lab you will install the `kubermatic-installer` to your local environmen
 KKP_INSTALLER_VERSION=2.30.4
 
 # download the kubermatic-installer release
-curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_INSTALLER_VERSION/kubermatic-ce-v$KKP_INSTALLER_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ce-$KKP_INSTALLER_VERSION.tar.gz
+curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_INSTALLER_VERSION/kubermatic-ee-v$KKP_INSTALLER_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ee-$KKP_INSTALLER_VERSION.tar.gz
 
 # unzip kubermatic-installer release
-mkdir /training/kubermatic-ce-$KKP_INSTALLER_VERSION
-tar -xvf /tmp/kubermatic-ce-$KKP_INSTALLER_VERSION.tar.gz -C /training/kubermatic-ce-$KKP_INSTALLER_VERSION
+mkdir /training/kubermatic-ee-$KKP_INSTALLER_VERSION
+tar -xvf /tmp/kubermatic-ee-$KKP_INSTALLER_VERSION.tar.gz -C /training/kubermatic-ee-$KKP_INSTALLER_VERSION
 
 # copy `kubermatic-installer` into directory within `$PATH`
-cp /training/kubermatic-ce-$KKP_INSTALLER_VERSION/kubermatic-installer /usr/local/bin
+cp /training/kubermatic-ee-$KKP_INSTALLER_VERSION/kubermatic-installer /usr/local/bin
 
 # verify `kubermatic-installer` installation
 kubermatic-installer --version

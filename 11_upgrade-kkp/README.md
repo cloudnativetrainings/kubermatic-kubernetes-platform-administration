@@ -34,14 +34,14 @@ kubectl apply -f /training/kkp/kubermatic.yaml
 KKP_INSTALLER_VERSION=2.30.5
 
 # download the kkp release
-curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_INSTALLER_VERSION/kubermatic-ce-v$KKP_INSTALLER_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ce-$KKP_INSTALLER_VERSION.tar.gz
+curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_INSTALLER_VERSION/kubermatic-ee-v$KKP_INSTALLER_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ee-$KKP_INSTALLER_VERSION.tar.gz
 
 # unzip kkp release
-mkdir /training/kubermatic-ce-$KKP_INSTALLER_VERSION
-tar -xvf /tmp/kubermatic-ce-$KKP_INSTALLER_VERSION.tar.gz -C /training/kubermatic-ce-$KKP_INSTALLER_VERSION
+mkdir /training/kubermatic-ee-$KKP_INSTALLER_VERSION
+tar -xvf /tmp/kubermatic-ee-$KKP_INSTALLER_VERSION.tar.gz -C /training/kubermatic-ee-$KKP_INSTALLER_VERSION
 
 # copy `kubermatic-installer` into directory within `$PATH`
-cp /training/kubermatic-ce-$KKP_INSTALLER_VERSION/kubermatic-installer /usr/local/bin
+cp /training/kubermatic-ee-$KKP_INSTALLER_VERSION/kubermatic-installer /usr/local/bin
 
 # verify `kubermatic-installer` installation
 kubermatic-installer --version
@@ -53,7 +53,7 @@ echo "export KKP_INSTALLER_VERSION=${KKP_INSTALLER_VERSION}" | tee -a /root/.tra
 source /root/.trainingrc
 
 # copy the directory `charts` of the new kkp release
-cp -r /training/kubermatic-ce-$KKP_INSTALLER_VERSION/charts /training/kkp/
+cp -r /training/kubermatic-ee-$KKP_INSTALLER_VERSION/charts /training/kkp/
 ```
 
 ## Update KKP
