@@ -28,7 +28,7 @@ kubectl apply -f /training/kkp/seed-kubeconfig-secret.yaml
 
 ## Configure the Seed
 
-Take a look into `/training/kkp/seed.yaml`
+Take a look at `/training/kkp/seed.yaml`
 
 ## Apply the Seed
 
@@ -94,4 +94,4 @@ kubermatic-installer deploy kubermatic-seed \
 ```
 
 >**CONGRATS:**
->Congrats, your KKP installation is now ready for use!!!
+>Your KKP installation is now ready for use!
