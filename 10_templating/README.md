@@ -8,10 +8,14 @@ In this lab you will learn about templating in KKP.
 # add the base64 encoded gce serviceaccount to the file `/training/kkp/gce-preset.yaml`
 ENC_SA=$(base64 -w0 /training/.secrets/gcloud-service-account.json)
 yq ".spec.gcp.serviceAccount = \"$ENC_SA\"" -i /training/kkp/gce-preset.yaml
+```
 
+```bash
 # apply the preset 
 kubectl apply -f /training/kkp/gce-preset.yaml
+```
 
+```bash
 # verify
 kubectl get preset
 ```

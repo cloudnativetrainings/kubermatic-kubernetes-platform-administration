@@ -10,7 +10,9 @@ kubermatic-installer deploy \
     --charts-directory /training/kkp/charts \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
+```
 
+```bash
 # verify everything is running smoothly
 # => note that the pods kubermatic-api-XXXXX will not run smoothly due to dns is not setup yet
 watch -n 1 kubectl -n kubermatic get pods
@@ -25,16 +27,22 @@ Configure the DNS records for accessing KKP UI.
 ```bash
 # store IP of the load balancer into an environment variable
 INGRESS_IP=$(kubectl -n nginx-ingress-controller get service nginx-ingress-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+```
 
+```bash
 # verify that environment variable is set
 echo $INGRESS_IP
+```
 
+```bash
 # create the dns entries at gce
 gcloud dns record-sets transaction start --zone=$DNS_ZONE_NAME
 gcloud dns record-sets transaction add --zone=$DNS_ZONE_NAME --ttl 60 --name="$DOMAIN." --type A $INGRESS_IP
 gcloud dns record-sets transaction add --zone=$DNS_ZONE_NAME --ttl 60 --name="*.$DOMAIN."  --type A $INGRESS_IP
 gcloud dns record-sets transaction execute --zone $DNS_ZONE_NAME
+```
 
+```bash
 # verify dns records
 nslookup $DOMAIN
 nslookup test.$DOMAIN
@@ -48,7 +56,9 @@ To enable TLS communication, we use cert-manager.
 # configure the email address for the clusterissuer
 EMAIL=<FILL-IN-YOUR-MAIL-ADDRESS>
 yq ".spec.acme.email = \"$EMAIL\"" -i /training/kkp/clusterissuer.yaml
+```
 
+```bash
 # apply the clusterissuer
 kubectl apply -f /training/kkp/clusterissuer.yaml
 ```
@@ -60,18 +70,24 @@ kubectl apply -f /training/kkp/clusterissuer.yaml
 yq ".spec.ingress.certificateIssuer.name = \"letsencrypt-prod\"" -i /training/kkp/kubermatic.yaml
 yq ".spec.auth.skipTokenIssuerTLSVerify = false" -i /training/kkp/kubermatic.yaml
 sed -i "s/letsencrypt-staging/letsencrypt-prod/g" /training/kkp/values.yaml
+```
 
+```bash
 # re-run the installer again
 kubermatic-installer deploy \
     --kubeconfig /root/.kube/config \
     --charts-directory /training/kkp/charts \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
+```
 
+```bash
 # verify you obtain valid certificates from LetsEncrypt
 # => note that it can take up a few minutes to get the certs in ready state
 watch -n 1 kubectl get certs -A
+```
 
+```bash
 # verify everything is running smoothly
 # => note that the pods kubermatic-api-XXXXX should be fine
 watch -n 1 kubectl -n kubermatic get pods
@@ -85,8 +101,12 @@ watch -n 1 kubectl -n kubermatic get pods
 ```bash
 # echo the URL of your running KKP
 echo https://$DOMAIN
+```
 
+```bash
 # make use of the email address you configured previously
+```
 
+```bash
 # make use of the password you configured in the previous lab
 ```

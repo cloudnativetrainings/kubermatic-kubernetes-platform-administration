@@ -18,10 +18,14 @@ In our case, the seed and master components are running in the same cluster.
 ```bash
 # copy the existing kubeconfig to a new file
 cp /training/k1/$TRAINEE_NAME-k1-cluster-kubeconfig /training/kkp/temp-seed-kubeconfig.yaml
+```
 
+```bash
 # create the secret manifest
 kubectl create secret generic seed-kubeconfig -n kubermatic --from-file kubeconfig=/training/kkp/temp-seed-kubeconfig.yaml --dry-run=client -o yaml > /training/kkp/seed-kubeconfig-secret.yaml
+```
 
+```bash
 # apply the secret to your cluster
 kubectl apply -f /training/kkp/seed-kubeconfig-secret.yaml
 ```
@@ -35,7 +39,9 @@ Take a look at `/training/kkp/seed.yaml`
 ```bash
 # apply the seed components to your cluster
 kubectl apply -f /training/kkp/seed.yaml
+```
 
+```bash
 # verify the seed components are running
 # => kubermatic-seed-controller-manager-... 
 # => nodeport-proxy-...
@@ -56,15 +62,21 @@ Therefore, you have to make use of the nodeport proxy, which exposes the apiserv
 ```bash
 # store IP of NodePort Proxy into environment variable
 SEED_IP=$(kubectl -n kubermatic get svc nodeport-proxy -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+```
 
+```bash
 # verify that environment variable is set
 echo $SEED_IP
+```
 
+```bash
 # create a dns entry for the seed clusters at gce
 gcloud dns record-sets transaction start --zone=$DNS_ZONE_NAME
 gcloud dns record-sets transaction add --zone=$DNS_ZONE_NAME --ttl 60 --name="*.kubermatic.$DOMAIN." --type A $SEED_IP
 gcloud dns record-sets transaction execute --zone $DNS_ZONE_NAME
+```
 
+```bash
 # verify DNS record
 nslookup test.kubermatic.$DOMAIN
 ```

@@ -9,7 +9,9 @@ Further information about applications can be found in the [KKP documentation](h
 ```bash
 # apply the application definitions
 kubectl apply -f /training/kkp/training-application.yaml
+```
 
+```bash
 # verify the application definitions
 kubectl get applicationdefinitions
 ```
@@ -28,16 +30,24 @@ You will be able to deploy the application in your user cluster after about 30 s
 ```bash
 # verify the helm release
 helm --kubeconfig /training/kubeconfig-admin-XXXXX -n training-application ls
+```
 
+```bash
 # verify the application
 kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n training-application get all
+```
 
+```bash
 # get the IP of the LoadBalancer of the application
 APP_IP=$(kubectl --kubeconfig /training/kubeconfig-admin-XXXXX -n training-application get svc my-app -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+```
 
+```bash
 # persist the application IP into an environment variable
 echo "export APP_IP=${APP_IP}" | tee -a /root/.trainingrc
+```
 
+```bash
 # ensure value is set in your current bash
 source /root/.trainingrc
 ```

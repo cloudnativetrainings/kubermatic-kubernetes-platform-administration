@@ -39,10 +39,14 @@ You will find a new namespace holding all the control plane components of the us
 
 ```bash
 kubectl get ns
+```
 
+```bash
 # see all the control plane components of the cluster
 watch -n 1 kubectl -n cluster-XXXXX get pods
+```
 
+```bash
 # you can watch the machine-controller of the cluster provisioning a worker node
 kubectl -n cluster-XXXXX logs -f machine-controller-XXXXX
 ```
@@ -66,7 +70,9 @@ Now we will check what happens if a component of the user cluster's control plan
 ```bash
 # delete one of the etcd pods
 kubectl -n cluster-XXXXX delete pod etcd-0
+```
 
+```bash
 # the StatefulSet will take care to restart the deleted etcd-0 node
 watch -n 1 kubectl -n cluster-XXXXX get pods
 ```
@@ -79,16 +85,24 @@ watch -n 1 kubectl -n cluster-XXXXX get pods
 ```bash
 # everything is declarative with KKP
 kubectl get cluster XXXXX -o yaml
+```
 
+```bash
 # get machinedeployments of the user cluster
 kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n kube-system get machinedeployment
+```
 
+```bash
 # edit the machine deployment of the user cluster, eg scale the worker nodes to 1 replica
 kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n kube-system edit md MD-NAME
+```
 
+```bash
 # scale the machine deployment of the user cluster to 3
 kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n kube-system scale md MD-NAME --replicas 3
+```
 
+```bash
 # verify your changes
 watch -n 1 kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n kube-system get md,ms,machine,nodes
 ```

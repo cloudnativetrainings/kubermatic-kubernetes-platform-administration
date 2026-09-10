@@ -46,7 +46,9 @@ Now you will update your User Cluster via bash. Additionally, you will verify th
 ```bash
 # change the field `spec.version` of the User Cluster to `1.35.4`.
 kubectl edit cluster XXXXX
+```
 
+```bash
 # verify the rollout
 watch -n 1 kubectl -n cluster-XXXXX get pods
 ```
@@ -56,7 +58,9 @@ watch -n 1 kubectl -n cluster-XXXXX get pods
 ```bash
 # change the version of the User Clusters MachineDeployment via the following. Change the version of the field `spec.template.spec.versions.kubelet` to `1.35.4`.
 kubectl --kubeconfig /training/kubeconfig-admin-XXXXX -n kube-system edit md XXXXX
+```
 
+```bash
 # observe the nodes getting upgraded
 watch -n 1 kubectl --kubeconfig /training/kubeconfig-admin-XXXXX get md,ms,machine,nodes -A
 ```
