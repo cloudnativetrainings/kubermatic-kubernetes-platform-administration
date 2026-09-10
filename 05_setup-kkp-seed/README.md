@@ -70,7 +70,7 @@ echo $SEED_IP
 ```
 
 ```bash
-# create a dns entry for the seed clusters at gce
+# create a dns entry for the seed clusters at gcp
 gcloud dns record-sets transaction start --zone=$DNS_ZONE_NAME
 gcloud dns record-sets transaction add --zone=$DNS_ZONE_NAME --ttl 60 --name="*.kubermatic.$DOMAIN." --type A $SEED_IP
 gcloud dns record-sets transaction execute --zone $DNS_ZONE_NAME

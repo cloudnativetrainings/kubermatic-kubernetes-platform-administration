@@ -35,7 +35,7 @@ echo $INGRESS_IP
 ```
 
 ```bash
-# create the dns entries at gce
+# create the dns entries at gcp
 gcloud dns record-sets transaction start --zone=$DNS_ZONE_NAME
 gcloud dns record-sets transaction add --zone=$DNS_ZONE_NAME --ttl 60 --name="$DOMAIN." --type A $INGRESS_IP
 gcloud dns record-sets transaction add --zone=$DNS_ZONE_NAME --ttl 60 --name="*.$DOMAIN."  --type A $INGRESS_IP

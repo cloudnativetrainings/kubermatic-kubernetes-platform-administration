@@ -4,7 +4,7 @@ In this lab you will create your first User Cluster.
 
 ## Create Cluster within UI
 
-To be able to create resources on GCE, we need the GCE ServiceAccount encoded in base64. You will learn later how to configure this via a Preset.
+To be able to create resources on GCP, we need the GCP ServiceAccount encoded in base64. You will learn later how to configure this via a Preset.
 
 ```bash
 base64 -w0 /training/.secrets/gcloud-service-account.json
@@ -19,7 +19,7 @@ base64 -w0 /training/.secrets/gcloud-service-account.json
   - Within Tab `Cluster`
     - Generate a random Cluster name
   - Within Tab `Settings`
-    - Copy the base64 encoded GCE google-sa-key.json in the field `Service Account`
+    - Copy the base64 encoded GCP google-sa-key.json in the field `Service Account`
   - Within Tab `Initial Nodes`
     - Generate a random MachineDeployment name
     - Set the number of replicas to 1

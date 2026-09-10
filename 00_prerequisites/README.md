@@ -49,7 +49,7 @@ source /root/.trainingrc
 
 ```bash
 # verify
-echo $GCE_PROJECT
+echo $GCP_PROJECT
 echo $TRAINEE_NAME
 echo $DOMAIN
 echo $DNS_ZONE_NAME
@@ -60,19 +60,19 @@ echo $DNS_ZONE_NAME
 KubeOne needs an SSH key pair for communicating with the control plane and worker nodes.
 
 ```bash
-# create a ssh-key-pair for gce
-ssh-keygen -q -N "" -t rsa -f /training/.secrets/gce -C root
+# create a ssh-key-pair for gcp
+ssh-keygen -q -N "" -t rsa -f /training/.secrets/gcp -C root
 ```
 
 ```bash
 # ensure proper private key file permissions
-chmod 400 /training/.secrets/gce
+chmod 400 /training/.secrets/gcp
 ```
 
 ```bash
 # ensure .ssh key is known on environment restarts
 echo 'eval `ssh-agent`' >> /root/.trainingrc
-echo "ssh-add /training/.secrets/gce" >> /root/.trainingrc
+echo "ssh-add /training/.secrets/gcp" >> /root/.trainingrc
 ```
 
 ```bash
@@ -82,19 +82,19 @@ source /root/.trainingrc
 
 ```bash
 # verify agent is running and holds proper key
-ssh-add -l | grep "$(ssh-keygen -lf /training/.secrets/gce)"
+ssh-add -l | grep "$(ssh-keygen -lf /training/.secrets/gcp)"
 ```
 
-## Configure GCE
+## Configure GCP
 
 ```bash
-# activate gce account
+# activate gcp account
 gcloud auth activate-service-account --key-file=/training/.secrets/gcloud-service-account.json
 ```
 
 ```bash
-# set the gce project
-gcloud config set project $GCE_PROJECT --quiet
+# set the gcp project
+gcloud config set project $GCP_PROJECT --quiet
 ```
 
 ```bash

@@ -13,7 +13,7 @@ kubeone reset -m /training/k1/kubeone.yaml -t /training/k1/tf_infra/ -y --remove
 ```
 
 ```bash
-# delete the gce DNS entries
+# delete the gcp DNS entries
 gcloud dns record-sets delete *.kubermatic.$DOMAIN. --type=A --zone=$DNS_ZONE_NAME
 gcloud dns record-sets delete *.$DOMAIN. --type=A --zone=$DNS_ZONE_NAME
 gcloud dns record-sets delete $DOMAIN. --type=A --zone=$DNS_ZONE_NAME

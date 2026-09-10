@@ -1,8 +1,8 @@
-project                                 = "<FILL-IN-YOUR-GCE-PROJECT-ID>"
+project                                 = "<FILL-IN-YOUR-GCP-PROJECT-ID>"
 cluster_name                            = "<FILL-IN-CLUSTER-NAME>"
 region                                  = "europe-west3"
-ssh_public_key_file                     = "/training/.secrets/gce.pub"
-ssh_private_key_file                    = "/training/.secrets/gce"
+ssh_public_key_file                     = "/training/.secrets/gcp.pub"
+ssh_private_key_file                    = "/training/.secrets/gcp"
 control_plane_vm_count                  = 1
 control_plane_target_pool_members_count = 1
 initial_machinedeployment_replicas      = 1
