@@ -1,6 +1,6 @@
 # Kubermatic Kubernetes Platform
 
-In this training you will learn how to use KubeOne to provision Kubernetes Clusters.
+In this training you will learn how to install and administer the Kubermatic Kubernetes Platform (KKP).
 
 ## Setup the training environment
 

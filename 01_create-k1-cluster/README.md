@@ -1,6 +1,6 @@
 # Create Master/Seed Kubernetes Cluster
 
-In this lab you will create the Kubernetes Cluster in which we will deploy KKP.
+In this lab you will create the Kubernetes cluster in which you will deploy KKP.
 
 ## Create Cluster
 

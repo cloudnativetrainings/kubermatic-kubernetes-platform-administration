@@ -6,22 +6,22 @@ In this lab you will upgrade KKP.
 
 ### Check the Release Notes
 
-Before upgrading KKP please **ALWAYS** take a look at the release notes. E.g. for 2.30, you can find them in the [kkp documentation](https://docs.kubermatic.com/kubermatic/v2.30/release-notes/).
+Before upgrading KKP, please **ALWAYS** take a look at the release notes. E.g. for 2.30, you can find them in the [KKP documentation](https://docs.kubermatic.com/kubermatic/v2.30/release-notes/).
 
 ### Check the supported Kubernetes Versions
 
-Furthermore we will remove our Kubernetes Versions Settings again, to go with the defaults. You can find the supported versions [here](https://docs.kubermatic.com/kubermatic/main/architecture/compatibility/supported-versions/).
+Furthermore, we will remove our Kubernetes version settings to go with the defaults. You can find the [supported versions](https://docs.kubermatic.com/kubermatic/main/architecture/compatibility/supported-versions/) in the KKP documentation.
 
 >**NOTE:**
 >Each KKP version supports a specific set of Kubernetes versions. Therefore the setting from the previous step can be problematic. To keep things simple, we simply delete this configuration.
 
-Remove the following in the file `kubermatic.yaml` in the `spec` section:
+Remove the `spec.versions` section from the file `kubermatic.yaml`:
 
 ```bash
 yq "del(.spec.versions)" -i /training/kkp/kubermatic.yaml
 ```
 
-And apply this change again.
+Then apply this change.
 
 ```bash
 kubectl apply -f /training/kkp/kubermatic.yaml
@@ -73,7 +73,7 @@ kubermatic-installer deploy kubermatic-seed \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
 
-# verify the control plane components of the user cluster gets restarted
+# verify the control plane components of the user cluster get restarted
 watch -n 1 kubectl -n cluster-XXXXX get pods
 ```
 
@@ -88,5 +88,5 @@ watch -n 1 kubectl -n kubermatic get pods
 
 ### Via UI
 
-- Verify the version in the UI, you can find the KKP version number in the lower left of the UI.
+- Verify the version in the UI — the KKP version number is in the lower left.
 - Verify the newly available Kubernetes Versions within your Cluster via the Upgrade DropDown.

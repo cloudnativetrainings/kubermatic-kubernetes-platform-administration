@@ -4,22 +4,22 @@ In this lab you will update your user cluster.
 
 ## Upgrade of User Cluster with UI
 
-We will also verify if there is downtime during the upgrade process of the deployed applications.
+We will also verify whether there is downtime during the upgrade process of the deployed applications.
 
 Note that there are some requirements for the applications to make that possible:
 
 - The Application has to have a `RollingUpdate` Rollout Strategy.
 - The Application has to have proper liveness and readiness probes set.
 - The Application has to have a proper `terminationGracePeriod`.
-- The Application has to be scaled > 1.
+- The Application has to be scaled to more than one replica.
 
-Within the UI upgrade your cluster to version `1.35.3`. Also check the checkbox `Upgrade Machine Deployments`.
+Within the UI, upgrade your cluster to version `1.35.3`. Also check the checkbox `Upgrade Machine Deployments`.
 
-The control plane of your user cluster will be upgraded very fast, because it is only about starting new containers. The worker nodes will need about ~ 5 minutes to get updated, because this is about starting new VMs.
+The control plane of your user cluster will be upgraded very fast, because it is only about starting new containers. The worker nodes will need about 5 minutes to get updated, because this is about starting new VMs.
 
 ## Manage the available Kubernetes versions
 
-Add the following to the file `kubermatic.yaml` in the `spec` section (mind the proper indentation):
+Add the available Kubernetes versions to the `spec` section of the file `kubermatic.yaml`:
 
 ```bash
 yq ".spec.versions.versions[0] = \"v1.35.1\"" -i /training/kkp/kubermatic.yaml
@@ -39,7 +39,7 @@ Afterwards you can also verify the available Kubernetes versions for your User C
 
 ## Upgrade of User Cluster via Bash
 
-Now you will update your User Cluster via bash. Additionally you will verify the availability of our training-application application.
+Now you will update your User Cluster via bash. Additionally, you will verify the availability of the training-application.
 
 ### Upgrade the Control Plane
 

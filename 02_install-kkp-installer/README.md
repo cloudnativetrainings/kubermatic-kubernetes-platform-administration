@@ -1,6 +1,6 @@
 # Install kubermatic-installer
 
-In this lab you will install the `kubermatic-installer` to your local environment.
+In this lab you will install the `kubermatic-installer` in your local environment.
 
 >**NOTE:**
 >You are not downloading the latest kubermatic-installer version, so that you can upgrade it in a later step.

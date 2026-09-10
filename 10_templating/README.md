@@ -17,7 +17,7 @@ kubectl get preset
 ```
 
 >**NOTE:**
->You can also manage presets via UI in the `Admin Panel` / `Manage Resources` / `Provider Presets`
+>You can also manage presets via the UI in the `Admin Panel` / `Manage Resources` / `Provider Presets`.
 
 ## Create Cluster Template
 
@@ -27,7 +27,7 @@ kubectl get preset
 1. Instead of clicking the button `Create Cluster`, click the button `Save Cluster Template` in the tab `Summary`.
 1. Give the template a proper name and save it, e.g. on scope `Project`.
 
-Verify the ClusterTemplate via CLI
+Verify the ClusterTemplate via the CLI:
 
 ```bash
 kubectl get clustertemplate
@@ -35,4 +35,4 @@ kubectl get clustertemplate
 
 ## Make use of templates
 
-Within the UI create a cluster via the button `Create Cluster from Template` and make use of the template created in the previous step.
+Within the UI, create a cluster via the button `Create Cluster from Template` and make use of the template created in the previous step.

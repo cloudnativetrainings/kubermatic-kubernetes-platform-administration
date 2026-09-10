@@ -4,7 +4,7 @@ In this lab you will create your first User Cluster.
 
 ## Create Cluster within UI
 
-To be able to create resources on GCE, we need the GCE ServiceAccount encoded in base64. You will learn afterwards how to configure this via a Preset.
+To be able to create resources on GCE, we need the GCE ServiceAccount encoded in base64. You will learn later how to configure this via a Preset.
 
 ```bash
 base64 -w0 /training/.secrets/gcloud-service-account.json
@@ -12,7 +12,7 @@ base64 -w0 /training/.secrets/gcloud-service-account.json
 
 - Create a new project via the button `+ Add Project`.
 - Choose the project.
-- Start the cluster creation dialogue by clicking the button `Create Resource / Cluster`
+- Start the cluster creation dialog by clicking the button `Create Resource / Cluster`
   - Within Tab `Provider`
     - Choose Provider `Google Cloud`
     - Choose Datacenter `Frankfurt`
@@ -35,7 +35,7 @@ base64 -w0 /training/.secrets/gcloud-service-account.json
 
 ## Verify in Bash
 
-You will find a new namespace holding all the control plane components of the user cluster
+You will find a new namespace holding all the control plane components of the user cluster.
 
 ```bash
 kubectl get ns
@@ -44,16 +44,16 @@ kubectl get ns
 watch -n 1 kubectl -n cluster-XXXXX get pods
 
 # you can watch the machine-controller of the cluster provisioning a worker node
-kubectl -n cluster-XXX logs -f machine-controller-XXX
+kubectl -n cluster-XXXXX logs -f machine-controller-XXXXX
 ```
 
 ## Connect to the User Cluster
 
 Download the kubeconfig via the `Get Kubeconfig` button at the top right of the cluster page in the KKP UI.
 
-Drag and Drop the downloaded kubeconfig into the Google Cloud Shell.
+Drag and drop the downloaded kubeconfig into the directory `/training/` of your Codespace.
 
-Connect to the User Cluster
+Connect to the User Cluster:
 
 ```bash
 kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX get nodes
@@ -64,7 +64,7 @@ kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX get nodes
 Now we will check what happens if a component of the user cluster's control plane has an issue.
 
 ```bash
-# delete one of the etcd nodes
+# delete one of the etcd pods
 kubectl -n cluster-XXXXX delete pod etcd-0
 
 # the StatefulSet will take care to restart the deleted etcd-0 node
@@ -86,7 +86,7 @@ kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n kube-system get machine
 # edit the machine deployment of the user cluster, eg scale the worker nodes to 1 replica
 kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n kube-system edit md MD-NAME
 
-# scale the machine deployment of the user cluster back again to 3
+# scale the machine deployment of the user cluster to 3
 kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n kube-system scale md MD-NAME --replicas 3
 
 # verify your changes

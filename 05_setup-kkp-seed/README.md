@@ -13,7 +13,7 @@ Components running in the master cluster have to be able to talk to the seed clu
 
 Therefore the seed has to be configured in the master cluster.
 
-In our case the Seed and Master Components are running in the same cluster.
+In our case, the seed and master components are running in the same cluster.
 
 ```bash
 # copy the existing kubeconfig to a new file
@@ -51,7 +51,7 @@ The apiservers of the user clusters have to be reachable for
 - clients like kubectl
 - from master cluster components when master and seed are separate clusters
 
-Therefore you have to make use of the nodeport proxy which exposes the apiservers of the user clusters.
+Therefore, you have to make use of the nodeport proxy, which exposes the apiservers of the user clusters.
 
 ```bash
 # store IP of NodePort Proxy into environment variable
@@ -73,9 +73,9 @@ nslookup test.kubermatic.$DOMAIN
 
 Components in the seed clusters back up the etcd snapshots of the user clusters regularly. The backups are stored via [minio](https://min.io/). You have to configure minio.
 
-Change the existing minio settings in the file `/training/kkp/values.yaml` to the following:
+Change the existing minio settings in the file `/training/kkp/values.yaml`:
 
-```yaml
+```bash
 yq ".minio.storeSize = \"10Gi\"" -i /training/kkp/values.yaml
 yq ".minio.storageClass = \"kubermatic-fast\"" -i /training/kkp/values.yaml
 yq ".minio.credentials.accessKey = \"reoshe9Eiwei2ku5foB6owiva2Sheeth\"" -i /training/kkp/values.yaml

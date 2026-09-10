@@ -23,7 +23,7 @@ watch -n 1 kubectl -n kubermatic get pods
 Configure the DNS records for accessing KKP UI.
 
 ```bash
-# store IP of Loadbalancer into environment variable
+# store IP of the load balancer into an environment variable
 INGRESS_IP=$(kubectl -n nginx-ingress-controller get service nginx-ingress-controller -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
 # verify that environment variable is set
@@ -88,5 +88,5 @@ echo https://$DOMAIN
 
 # make use of the email address you configured previously
 
-# the password is `password` if you haven't changed it
+# make use of the password you configured in the previous lab
 ```

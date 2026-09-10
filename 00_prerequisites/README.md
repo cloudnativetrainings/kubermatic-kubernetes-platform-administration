@@ -19,7 +19,7 @@ terraform version
 mkdir /training/.secrets
 ```
 
-Drag and Drop the files (provided by the trainer) into the directory `/training/.secrets/`
+Drag and drop the files (provided by the trainer) into the directory `/training/.secrets/`
 
 - environment.sh
 - README.md
@@ -28,7 +28,7 @@ Drag and Drop the files (provided by the trainer) into the directory `/training/
 ## Set important environment variables
 
 > **IMPORTANT:**
-> These variables will get referenced during the following labs. Make sure to set them before continuing. You can find the needed information in the file `/training/.secrets/README.md`, but, for convenience, there is also a shell script which will persist the environment variables in the file `/root/.trainingrc`.
+> These variables will get referenced during the following labs. Make sure to set them before continuing. You can find the required information in the file `/training/.secrets/README.md`, but, for convenience, there is also a shell script which will persist the environment variables in the file `/root/.trainingrc`.
 
 ```bash
 # make the shell script executable
