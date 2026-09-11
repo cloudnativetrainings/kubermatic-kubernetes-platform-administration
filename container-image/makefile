@@ -1,4 +1,4 @@
-IMAGE_NAME = quay.io/training-ghcs-kubermatic-kubernetes-platform-administration-trainee-environment
+IMAGE_NAME = quay.io/kubermatic-labs/training-ghcs-kubermatic-kubernetes-platform-administration-trainee-environment
 IMAGE_TAG = 2.0.0
 CONTAINER_NAME = kkp-workshop
 
