@@ -2,11 +2,29 @@
 
 In this training you will learn how to install and administer the Kubermatic Kubernetes Platform (KKP).
 
-## Setup the training environment
+## Set up the training environment
 
-1. Open [Github Codespaces](https://github.com/codespaces) and create your new `cloudnativetrainings/kubermatic-kubernetes-platform-administration` codespace.
-1. Start with the [00_prerequisites](./00_prerequisites/README.md) lab.
+### Clone the Git Repo
 
-## Teardown the training environment
+```bash
+git clone https://github.com/cloudnativetrainings/kubermatic-kubernetes-platform-administration
+```
 
-1. Delete your `cloudnativetrainings/kubermatic-kubernetes-platform-administration` codespace via [Github Codespaces](https://github.com/codespaces).
+### Run the k1-workshop Container
+
+```bash
+docker run -it -d \
+  --name kkp-workshop \
+  --restart=always \
+  --cpus=2 \
+  --memory=4g \
+  -p 8080:8080 \
+  -p 8081:8081 \
+  --hostname kkp-workshop \
+  -v ./kubermatic-kubernetes-platform-administration:/training \
+  quay.io/kubermatic-labs/quay.io/kubermatic-labs/training-ghcs-kubermatic-kubernetes-platform-administration-trainee-environment :2.0.0
+```
+
+### Access your kkp-workshop IDE with your browser
+
+The URL therefore is <http://localhost:8080>

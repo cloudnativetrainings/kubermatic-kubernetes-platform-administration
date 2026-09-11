@@ -15,15 +15,15 @@ Furthermore, we will remove our Kubernetes version settings to go with the defau
 >**NOTE:**
 >Each KKP version supports a specific set of Kubernetes versions. Therefore the setting from the previous step can be problematic. To keep things simple, we simply delete this configuration.
 
-Remove the `spec.versions` section from the file `kubermatic.yaml`:
+We want to go with the supported Kubernetetes Versions which get delivered with the new KKP version. Therefor you have to remove the `spec.versions` section from the file `kubermatic.yaml`:
 
 ```bash
+# delete the k8s version settings
 yq "del(.spec.versions)" -i /training/kkp/kubermatic.yaml
 ```
 
-Then apply this change.
-
 ```bash
+# apply the change
 kubectl apply -f /training/kkp/kubermatic.yaml
 ```
 
@@ -31,16 +31,16 @@ kubectl apply -f /training/kkp/kubermatic.yaml
 
 ```bash
 # set the kkp-installer version
-KKP_INSTALLER_VERSION=2.30.5
+KKP_INSTALLER_VERSION=2.31.1
 ```
 
 ```bash
-# download the kkp release
+# download the kkp-installer release
 curl -L https://github.com/kubermatic/kubermatic/releases/download/v$KKP_INSTALLER_VERSION/kubermatic-ee-v$KKP_INSTALLER_VERSION-linux-amd64.tar.gz --output /tmp/kubermatic-ee-$KKP_INSTALLER_VERSION.tar.gz
 ```
 
 ```bash
-# unzip kkp release
+# unzip kkp-installer release
 mkdir /training/kubermatic-ee-$KKP_INSTALLER_VERSION
 tar -xvf /tmp/kubermatic-ee-$KKP_INSTALLER_VERSION.tar.gz -C /training/kubermatic-ee-$KKP_INSTALLER_VERSION
 ```
@@ -68,6 +68,12 @@ source /root/.trainingrc
 ```bash
 # copy the directory `charts` of the new kkp release
 cp -r /training/kubermatic-ee-$KKP_INSTALLER_VERSION/charts /training/kkp/
+```
+
+```bash
+# verify the newer helm charts are in use
+kubermatic-installer version \
+    --charts-directory /training/kkp/charts 
 ```
 
 ## Update KKP

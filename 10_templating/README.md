@@ -6,7 +6,7 @@ In this lab you will learn about templating in KKP.
 
 ```bash
 # add the base64 encoded gcp serviceaccount to the file `/training/kkp/gcp-preset.yaml`
-ENC_SA=$(base64 -w0 /training/.secrets/gcloud-service-account.json)
+ENC_SA=$(base64 -w0 /training/.secrets/gcp-service-account.json)
 yq ".spec.gcp.serviceAccount = \"$ENC_SA\"" -i /training/kkp/gcp-preset.yaml
 ```
 

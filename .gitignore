@@ -6,3 +6,11 @@ kubeone/tf_infra/.terraform/**
 kubeone/tf_infra/*.hcl
 kubeone/tf_infra/tf.json
 kubeone/tf_infra/*.tfstate
+kubermatic-ee-*
+kubeconfig-admin-*
+k1/tf_infra/
+kkp/charts/
+*.tar.gz
+*-kubeconfig
+k1/md.yaml
+

@@ -1,7 +1,7 @@
 .PHONY verify:
 verify:
 	test -f /root/.trainingrc
-	grep "source /root/.trainingrc" /root/.bashrc
+	grep "source /root/.trainingrc" /root/.zshrc
 	yq --version
 	uuidgen --version
 	which htpasswd
@@ -20,10 +20,9 @@ verify:
 	test -e /training/.secrets/gcp
 	test -e /training/.secrets/gcp.pub
 # TODO ensure that is the right ssh key - ssh-add -l | grep "$(ssh-keygen -lf .secrets/gcp)"
-	test -e /training/.secrets/gcloud-service-account.json 
+	test -e /training/.secrets/gcp-service-account.json 
 # TODO test -v $(GOOGLE_CREDENTIALS)
 # TODO verify gcp sa permissions
-	test -n "$(K1_VERSION)"
+	test -n "$(KUBEONE_VERSION)"
 	kubeone version
-	test -e /training/kubeone_${K1_VERSION}_linux_amd64/
 	echo "Training Environment successfully verified"

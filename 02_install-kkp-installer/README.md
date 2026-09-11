@@ -7,8 +7,10 @@ In this lab you will install the `kubermatic-installer` in your local environmen
 
 ```bash
 # set the kubermatic-installer version
-KKP_INSTALLER_VERSION=2.30.4
+KKP_INSTALLER_VERSION=2.31.0
 ```
+
+<!-- TODO yq with arrays do not use indexes -->
 
 ```bash
 # download the kubermatic-installer release
@@ -33,7 +35,7 @@ kubermatic-installer --version
 
 ```bash
 # add kubermatic-installer completion to your environment
-echo 'source <(kubermatic-installer completion bash)' | tee -a /root/.trainingrc 
+echo 'source <(kubermatic-installer completion zsh)' | tee -a /root/.trainingrc 
 ```
 
 ```bash

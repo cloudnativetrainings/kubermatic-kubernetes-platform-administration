@@ -19,6 +19,10 @@ The control plane of your user cluster will be upgraded very fast, because it is
 
 ## Manage the available Kubernetes versions
 
+>**WARNING:**
+>Please ensure that you copy the whole base64-encoded string
+Before enabling Kubernetes versions please ensure it is supported by your specific KKP version. You can find the [supported versions](https://docs.kubermatic.com/kubermatic/main/architecture/compatibility/supported-versions/) in the KKP documentation.
+
 Add the available Kubernetes versions to the `spec` section of the file `kubermatic.yaml`:
 
 ```bash
@@ -26,6 +30,10 @@ yq ".spec.versions.versions[0] = \"v1.35.1\"" -i /training/kkp/kubermatic.yaml
 yq ".spec.versions.versions[1] = \"v1.35.2\"" -i /training/kkp/kubermatic.yaml
 yq ".spec.versions.versions[2] = \"v1.35.3\"" -i /training/kkp/kubermatic.yaml
 yq ".spec.versions.versions[3] = \"v1.35.4\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.versions[4] = \"v1.35.5\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.versions[5] = \"v1.35.6\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.versions[6] = \"v1.35.7\"" -i /training/kkp/kubermatic.yaml
+yq ".spec.versions.versions[7] = \"v1.35.8\"" -i /training/kkp/kubermatic.yaml
 yq ".spec.versions.default = \"v1.35.3\"" -i /training/kkp/kubermatic.yaml
 ```
 

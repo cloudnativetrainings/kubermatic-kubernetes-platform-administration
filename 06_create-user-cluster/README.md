@@ -7,8 +7,11 @@ In this lab you will create your first User Cluster.
 To be able to create resources on GCP, we need the GCP ServiceAccount encoded in base64. You will learn later how to configure this via a Preset.
 
 ```bash
-base64 -w0 /training/.secrets/gcloud-service-account.json
+base64 -w0 /training/.secrets/gcp-service-account.json; echo
 ```
+
+>**WARNING:**
+>Please ensure that you copy the whole base64-encoded string
 
 - Create a new project via the button `+ Add Project`.
 - Choose the project.

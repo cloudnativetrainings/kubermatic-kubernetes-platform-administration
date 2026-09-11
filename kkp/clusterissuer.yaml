@@ -10,5 +10,8 @@ spec:
       name: letsencrypt-prod-acme-account-key
     solvers:
       - http01:
-          ingress:
-            class: nginx
+          gatewayHTTPRoute:
+            parentRefs:
+              - kind: Gateway
+                name: kubermatic
+                namespace: kubermatic

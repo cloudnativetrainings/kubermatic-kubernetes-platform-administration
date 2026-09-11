@@ -2,19 +2,7 @@
 
 In this lab you will ensure everything is in place to create a Kubernetes cluster via kubeone.
 
-## Verify installed software
-
-```bash
-# verify kubectl is installed
-kubectl version --client
-```
-
-```bash
-# verify terraform is installed
-terraform version
-```
-
-### Copy your Training Files
+## Copy your Training Files
 
 ```bash
 # create a directory for holding sensitive information
@@ -24,8 +12,7 @@ mkdir /training/.secrets
 Drag and drop the files (provided by the trainer) into the directory `/training/.secrets/`
 
 - environment.sh
-- README.md
-- gcloud-service-account.json
+- gcp-service-account.json
 
 ## Set important environment variables
 
@@ -35,19 +22,13 @@ Drag and drop the files (provided by the trainer) into the directory `/training/
 ```bash
 # make the shell script executable
 chmod 0700 /training/.secrets/environment.sh
-```
 
-```bash
 # persist the environment variables into the file /root/.trainingrc
 /training/.secrets/environment.sh
-```
 
-```bash
 # ensure changes are applied in your current bash
 source /root/.trainingrc
-```
 
-```bash
 # verify
 echo $GCP_PROJECT
 echo $TRAINEE_NAME
@@ -62,25 +43,17 @@ KubeOne needs an SSH key pair for communicating with the control plane and worke
 ```bash
 # create a ssh-key-pair for gcp
 ssh-keygen -q -N "" -t rsa -f /training/.secrets/gcp -C root
-```
 
-```bash
 # ensure proper private key file permissions
 chmod 400 /training/.secrets/gcp
-```
 
-```bash
 # ensure .ssh key is known on environment restarts
 echo 'eval `ssh-agent`' >> /root/.trainingrc
 echo "ssh-add /training/.secrets/gcp" >> /root/.trainingrc
-```
 
-```bash
 # ensure changes are applied in your current bash
 source /root/.trainingrc
-```
 
-```bash
 # verify agent is running and holds proper key
 ssh-add -l | grep "$(ssh-keygen -lf /training/.secrets/gcp)"
 ```
@@ -89,65 +62,17 @@ ssh-add -l | grep "$(ssh-keygen -lf /training/.secrets/gcp)"
 
 ```bash
 # activate gcp account
-gcloud auth activate-service-account --key-file=/training/.secrets/gcloud-service-account.json
-```
+gcloud auth activate-service-account --key-file=/training/.secrets/gcp-service-account.json
 
-```bash
 # set the gcp project
 gcloud config set project $GCP_PROJECT --quiet
-```
 
-```bash
 # set the compute region and zone
 gcloud config set compute/region europe-west3
 gcloud config set compute/zone europe-west3-a
-```
 
-```bash
 # verify your settings
 gcloud config list
-```
-
-```bash
-# persist the google credentials into an environment variable (needed by terraform and k1)
-echo "export GOOGLE_CREDENTIALS='$(cat /training/.secrets/gcloud-service-account.json)'" >> /root/.trainingrc
-```
-
-## Install KubeOne
-
-```bash
-# set the k1 version
-K1_VERSION=1.13.5
-```
-
-```bash
-# download the k1 release
-wget -P /tmp/ https://github.com/kubermatic/kubeone/releases/download/v${K1_VERSION}/kubeone_${K1_VERSION}_linux_amd64.zip
-```
-
-```bash
-# unzip k1 release
-unzip /tmp/kubeone_${K1_VERSION}_linux_amd64.zip -d /training/kubeone_${K1_VERSION}_linux_amd64
-```
-
-```bash
-# copy k1 into directory within `$PATH`
-cp /training/kubeone_${K1_VERSION}_linux_amd64/kubeone /usr/local/bin
-```
-
-```bash
-# verify k1 installation
-kubeone version
-```
-
-```bash
-# add k1 completion to your environment
-echo 'source <(kubeone completion bash)' | tee -a /root/.trainingrc 
-```
-
-```bash
-# persist the k1 version into an environment variable
-echo "export K1_VERSION=${K1_VERSION}" | tee -a /root/.trainingrc
 ```
 
 ## Verify your environment
@@ -155,9 +80,7 @@ echo "export K1_VERSION=${K1_VERSION}" | tee -a /root/.trainingrc
 ```bash
 # ensure all environment variables get set in your current bash
 source /root/.trainingrc
-```
 
-```bash
 # verify
 make verify
 ```

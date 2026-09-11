@@ -8,6 +8,8 @@ gcloud auth app-create --project=my-gcp-project \
   --name="My Example Web App" \
   --uri="http://localhost:8080"
 
+TODO port
+
 # UI
 https://console.cloud.google.com/apis/credentials?project=kkp-fourdata
 https://console.cloud.google.com/auth/clients/create

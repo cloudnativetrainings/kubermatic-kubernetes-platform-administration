@@ -46,17 +46,16 @@ sed -i "s/kkp.example.com/$DOMAIN/g" /training/kkp/values.yaml
 ```
 
 ```bash
+# TODO get rid of array index changes
+# TODO was there a breaking change, prev there was another random key needed
 # configure auth
 # => note that the value has to be exactly the same as in the file `/training/kkp/kubermatic.yaml` field `spec.auth.issuerClientSecret`
-yq ".dex.config.staticClients[1].secret = strenv(KUBERMATIC_ISSUER_SECRET)" -i /training/kkp/values.yaml
-export RANDOM_KEY="$(cat /dev/urandom | base64 | tr -dc 'A-Za-z0-9' | head -c32)"
-yq ".dex.config.staticClients[0].secret = strenv(RANDOM_KEY)" -i /training/kkp/values.yaml
+yq ".dex.config.staticClients[0].secret = strenv(KUBERMATIC_ISSUER_SECRET)" -i /training/kkp/values.yaml
 ```
 
 ```bash
 # configure the user for accessing the KKP UI
-EMAIL=<FILL-IN-YOUR-MAIL-ADDRESS>
-yq ".dex.config.staticPasswords[0].email = \"$EMAIL\"" -i /training/kkp/values.yaml
+yq ".dex.config.staticPasswords[0].email = \"$TRAINEE_EMAIL\"" -i /training/kkp/values.yaml
 ```
 
 ```bash

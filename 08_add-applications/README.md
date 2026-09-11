@@ -58,5 +58,5 @@ Keep the application running and monitor its availability in a separate terminal
 
 ```bash
 # run this 
-while true; do curl -I http://$APP_IP:80/; sleep 10s; done;
+while true; do curl -I http://$APP_IP:80/ ; sleep 10s; done;
 ```

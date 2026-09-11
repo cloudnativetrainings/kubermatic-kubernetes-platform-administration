@@ -1,0 +1,166 @@
+FROM ubuntu:26.04
+
+# TODO do I need this?
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG TARGETARCH
+
+# hadolint ignore=DL3008
+RUN apt-get update && apt-get install --no-install-recommends -y \
+  curl \
+  wget \
+  git \
+  sudo \
+  ca-certificates \
+  build-essential \
+  tree \
+  vim \
+  unzip \
+  zsh \
+  arping \
+  net-tools \
+  nmap \
+  traceroute \
+  iputils-ping \
+  apache2-utils \
+  openssh-client \
+  netcat-openbsd \
+  apt-transport-https \
+  gnupg \
+  htop \
+  dnsutils \
+  libarchive-tools \
+  uuid-runtime \  
+  && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /training/
+
+ARG YQ_VERSION=4.53.6
+RUN curl -LO https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_${TARGETARCH} \
+  && install -o root -g root -m 0500 yq_linux_${TARGETARCH} /usr/local/bin/yq \
+  && rm yq_linux_${TARGETARCH} \
+  && echo 'source <(yq shell-completion zsh)' >> /root/.trainingrc \
+  && echo "export YQ_VERSION=${YQ_VERSION}" >> /root/.trainingrc
+
+ARG CODE_SERVER_VERSION=4.135.0
+RUN curl -fsSL https://code-server.dev/install.sh | sh -s -- --version=${CODE_SERVER_VERSION} \
+  && echo "export CODE_SERVER_VERSION=${CODE_SERVER_VERSION}" >> /root/.trainingrc \
+  && rm -rf /root/.cache/code-server
+
+ARG GCLOUD_VERSION=583.0.0-0
+RUN curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg \
+  && echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends google-cloud-cli=${GCLOUD_VERSION} \
+  && echo "export GCLOUD_VERSION=${GCLOUD_VERSION}" >> /root/.trainingrc \
+  && rm -rf /var/lib/apt/lists/*
+
+ARG K8S_VERSION=1.36.3
+# the kubectl has to match the k8s version, the k8s version has to be supported by k1
+# for being able to upgrade the k8s cluster via k1 not the latest k8s version has to be used here
+RUN curl -LO https://dl.k8s.io/release/v${K8S_VERSION}/bin/linux/${TARGETARCH}/kubectl \
+  && install -o root -g root -m 0500 kubectl /usr/local/bin/kubectl \
+  && rm kubectl \
+  && echo 'source <(kubectl completion zsh)' >> /root/.trainingrc \
+  && echo "export K8S_VERSION=${K8S_VERSION}" >> /root/.trainingrc
+
+ARG KREW_VERSION=0.5.0
+# hadolint ignore=SC2016
+RUN curl -fsSLO https://github.com/kubernetes-sigs/krew/releases/download/v${KREW_VERSION}/krew-linux_${TARGETARCH}.tar.gz \
+  && mkdir -p krew-linux_${TARGETARCH} \
+  && bsdtar -zxvf krew-linux_${TARGETARCH}.tar.gz -C krew-linux_${TARGETARCH} \
+  && ./krew-linux_${TARGETARCH}/krew-linux_${TARGETARCH} install krew \
+  && rm krew-linux_${TARGETARCH}.tar.gz \
+  && rm -rf krew-linux_${TARGETARCH} \
+  && echo "export KREW_VERSION=${KREW_VERSION}" >> /root/.trainingrc
+ENV PATH="/root/.krew/bin:${PATH}"
+
+ARG HELM_VERSION=4.2.4
+RUN curl -LO https://get.helm.sh/helm-v${HELM_VERSION}-linux-${TARGETARCH}.tar.gz \
+  && bsdtar -zxvf helm-v${HELM_VERSION}-linux-${TARGETARCH}.tar.gz \
+  && install -o root -g root -m 0500 linux-${TARGETARCH}/helm /usr/local/bin/helm \
+  && rm helm-v${HELM_VERSION}-linux-${TARGETARCH}.tar.gz \
+  && rm -rf linux-${TARGETARCH}/ \
+  && echo 'source <(helm completion zsh)' >> /root/.trainingrc
+
+ARG HELMFILE_VERSION=1.7.4
+RUN curl -LO https://github.com/helmfile/helmfile/releases/download/v${HELMFILE_VERSION}/helmfile_${HELMFILE_VERSION}_linux_${TARGETARCH}.tar.gz \
+  && mkdir helmfile \
+  && bsdtar -zxvf helmfile_${HELMFILE_VERSION}_linux_${TARGETARCH}.tar.gz -C helmfile \
+  && install -o root -g root -m 0500 helmfile/helmfile /usr/local/bin/helmfile \
+  && rm helmfile_${HELMFILE_VERSION}_linux_${TARGETARCH}.tar.gz \
+  && rm -rf helmfile/ \
+  && echo 'source <(helmfile completion zsh)' >> /root/.trainingrc
+
+# hadolint ignore=DL3008
+RUN apt-get update && apt-get install --no-install-recommends -y \
+  kubectx \
+  && rm -rf /var/lib/apt/lists/*
+
+ARG TF_VERSION=1.16.1-1
+RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | gpg --dearmor | tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null \
+  && gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint \
+  && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(grep -oP '(?<=UBUNTU_CODENAME=).*' /etc/os-release || lsb_release -cs) main" | tee /etc/apt/sources.list.d/hashicorp.list \
+  && apt-get update \
+  && apt-get install -y --no-install-recommends terraform=${TF_VERSION} \
+  && echo "export TF_VERSION=${TF_VERSION}" | tee -a /root/.trainingrc \
+  && rm -rf /var/lib/apt/lists/*
+
+ARG YQ_VERSION=4.53.6
+RUN curl -LO https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_${TARGETARCH} \
+  && install -o root -g root -m 0500 yq_linux_${TARGETARCH} /usr/local/bin/yq \
+  && rm yq_linux_${TARGETARCH} \
+  && echo 'source <(yq shell-completion zsh)' >> /root/.trainingrc \
+  && echo "export YQ_VERSION=${YQ_VERSION}" >> /root/.trainingrc
+
+ARG KUBEONE_VERSION=1.14.3
+RUN curl -sfL https://get.kubeone.io | sh \
+  && echo 'source <(kubeone completion zsh)' >> /root/.trainingrc \
+  && echo "export KUBEONE_VERSION=${KUBEONE_VERSION}" >> /root/.trainingrc
+
+ARG VELERO_VERSION=1.18.2
+RUN curl -LO https://github.com/velero-io/velero/releases/download/v${VELERO_VERSION}/velero-v${VELERO_VERSION}-linux-${TARGETARCH}.tar.gz \
+  && bsdtar -zxvf velero-v${VELERO_VERSION}-linux-${TARGETARCH}.tar.gz \
+  && install -o root -g root -m 0500 velero-v${VELERO_VERSION}-linux-${TARGETARCH}/velero /usr/local/bin/velero \
+  && rm velero-v${VELERO_VERSION}-linux-${TARGETARCH}.tar.gz \
+  && rm -rf velero-v${VELERO_VERSION}-linux-${TARGETARCH} \
+  && echo "export VELERO_VERSION=${VELERO_VERSION}" >> /root/.trainingrc
+
+# zsh
+COPY ./.p10k.zsh /root/.p10k.zsh
+RUN curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -o install-ohmyzsh.sh \
+  && sh install-ohmyzsh.sh --unattended \
+  && rm install-ohmyzsh.sh \
+  && git clone --depth 1 https://github.com/zsh-users/zsh-autosuggestions /root/.oh-my-zsh/custom/plugins/zsh-autosuggestions \
+  && git clone --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting \
+  && sed -i 's/plugins=(git)/plugins=(git zsh-autosuggestions zsh-syntax-highlighting)/' /root/.zshrc \
+  && git clone --depth 1 https://github.com/romkatv/powerlevel10k.git /root/.oh-my-zsh/custom/themes/powerlevel10k \
+  && /root/.oh-my-zsh/custom/themes/powerlevel10k/gitstatus/install \
+  && sed -i 's/ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/' /root/.zshrc \
+  && echo 'source ~/.p10k.zsh' >> /root/.zshrc \
+  && chsh -s "$(which zsh)" \
+  && echo 'source /root/.trainingrc' >> /root/.zshrc
+
+# vscode settings
+RUN code-server --install-extension esbenp.prettier-vscode --user-data-dir /root/.vscode \
+  && code-server --install-extension redhat.vscode-yaml --user-data-dir /root/.vscode \
+  && code-server --install-extension hashicorp.terraform --user-data-dir /root/.vscode
+COPY ./vscode_settings.json /root/.vscode/User/settings.json
+RUN echo 'alias code=code-server' >> /root/.trainingrc
+
+# welcome message
+COPY ./welcome.sh /root/welcome.sh
+RUN chmod +x /root/welcome.sh \
+  && echo '/root/welcome.sh' >> /root/.trainingrc
+
+EXPOSE 8080
+EXPOSE 8081
+EXPOSE 8082
+
+ENTRYPOINT ["code-server"]
+
+CMD ["--bind-addr", "0.0.0.0:8080", "--auth", "none", \
+  "--user-data-dir", "/root/.vscode", \
+  "--disable-telemetry", "--disable-update-check", \
+  "--disable-workspace-trust", "--disable-getting-started-override", "."]

@@ -23,7 +23,7 @@ kubectl get nodes
 ```bash
 # get a minimalistic visual representation of your cluster
 # note the ui is currently only in beta state
-kubeone ui -m /training/k1/kubeone.yaml -t /training/k1/tf_infra
+kubeone ui -m /training/k1/kubeone.yaml -t /training/k1/tf_infra --port 8081
 ```
 
 ## Engage autoscaling on worker nodes
@@ -46,4 +46,9 @@ sed -i 's/cluster-api-autoscaler-node-group-max-size: "1"/cluster-api-autoscaler
 ```bash
 # apply the change
 kubectl apply -f /training/k1/md.yaml
+```
+
+```bash
+# verify auto-scaler 
+kubectl -n kube-system logs -f -l app.kubernetes.io/instance=cluster-autoscaler
 ```

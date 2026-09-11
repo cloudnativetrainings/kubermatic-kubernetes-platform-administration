@@ -78,7 +78,7 @@ gcloud dns record-sets transaction execute --zone $DNS_ZONE_NAME
 
 ```bash
 # verify DNS record
-nslookup test.kubermatic.$DOMAIN
+dig +short A test.kubermatic.$DOMAIN
 ```
 
 ## Set up minio

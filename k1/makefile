@@ -10,7 +10,7 @@ prepare-tf-config:
 .PHONY: terraform
 terraform: prepare-tf-config
 	terraform -chdir=/training/k1/tf_infra init
-	terraform -chdir=/training/k1/tf_infra apply -var=control_plane_target_pool_members_count=1 -auto-approve
+	terraform -chdir=/training/k1/tf_infra apply -auto-approve
 	
 .PHONY: create-cluster
 create-cluster: terraform
