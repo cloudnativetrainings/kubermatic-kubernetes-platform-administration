@@ -22,7 +22,7 @@ docker run -it -d \
   -p 8081:8081 \
   --hostname kkp-workshop \
   -v ./kubermatic-kubernetes-platform-administration:/training \
-  quay.io/kubermatic-labs/quay.io/kubermatic-labs/training-ghcs-kubermatic-kubernetes-platform-administration-trainee-environment :2.0.0
+  quay.io/kubermatic-labs/training-ghcs-kubermatic-kubernetes-platform-administration-trainee-environment :2.0.0
 ```
 
 ### Access your kkp-workshop IDE with your browser
