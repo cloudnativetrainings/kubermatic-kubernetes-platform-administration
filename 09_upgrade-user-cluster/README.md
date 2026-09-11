@@ -1,6 +1,6 @@
 # Upgrade User Clusters
 
-In this lab you will update your user cluster.
+In this lab you will upgrade your user cluster.
 
 ## Upgrade of User Cluster with UI
 
@@ -20,8 +20,7 @@ The control plane of your user cluster will be upgraded very fast, because it is
 ## Manage the available Kubernetes versions
 
 >**WARNING:**
->Please ensure that you copy the whole base64-encoded string
-Before enabling Kubernetes versions please ensure it is supported by your specific KKP version. You can find the [supported versions](https://docs.kubermatic.com/kubermatic/main/architecture/compatibility/supported-versions/) in the KKP documentation.
+>Before enabling Kubernetes versions, please ensure they are supported by your specific KKP version. You can find the [supported versions](https://docs.kubermatic.com/kubermatic/main/architecture/compatibility/supported-versions/) in the KKP documentation.
 
 Add the available Kubernetes versions to the `spec` section of the file `kubermatic.yaml`:
 

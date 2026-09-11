@@ -6,16 +6,16 @@ In this lab you will upgrade KKP.
 
 ### Check the Release Notes
 
-Before upgrading KKP, please **ALWAYS** take a look at the release notes. E.g. for 2.30, you can find them in the [KKP documentation](https://docs.kubermatic.com/kubermatic/v2.30/release-notes/).
+Before upgrading KKP, please **ALWAYS** take a look at the release notes. E.g. for 2.31, you can find them in the [KKP documentation](https://docs.kubermatic.com/kubermatic/v2.31/release-notes/).
 
 ### Check the supported Kubernetes Versions
 
 Furthermore, we will remove our Kubernetes version settings to go with the defaults. You can find the [supported versions](https://docs.kubermatic.com/kubermatic/main/architecture/compatibility/supported-versions/) in the KKP documentation.
 
 >**NOTE:**
->Each KKP version supports a specific set of Kubernetes versions. Therefore the setting from the previous step can be problematic. To keep things simple, we simply delete this configuration.
+>Each KKP version supports a specific set of Kubernetes versions. Therefore, the setting from the previous step can be problematic. To keep things simple, we simply delete this configuration.
 
-We want to go with the supported Kubernetetes Versions which get delivered with the new KKP version. Therefor you have to remove the `spec.versions` section from the file `kubermatic.yaml`:
+We want to go with the supported Kubernetes versions which get delivered with the new KKP version. Therefore you have to remove the `spec.versions` section from the file `kubermatic.yaml`:
 
 ```bash
 # delete the k8s version settings
@@ -73,7 +73,7 @@ cp -r /training/kubermatic-ee-$KKP_INSTALLER_VERSION/charts /training/kkp/
 ```bash
 # verify the newer helm charts are in use
 kubermatic-installer version \
-    --charts-directory /training/kkp/charts 
+    --charts-directory /training/kkp/charts
 ```
 
 ## Update KKP

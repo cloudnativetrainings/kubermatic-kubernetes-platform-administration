@@ -11,7 +11,7 @@ yq ".spec.gcp.serviceAccount = \"$ENC_SA\"" -i /training/kkp/gcp-preset.yaml
 ```
 
 ```bash
-# apply the preset 
+# apply the preset
 kubectl apply -f /training/kkp/gcp-preset.yaml
 ```
 

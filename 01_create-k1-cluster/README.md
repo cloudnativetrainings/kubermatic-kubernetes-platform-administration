@@ -49,6 +49,6 @@ kubectl apply -f /training/k1/md.yaml
 ```
 
 ```bash
-# verify auto-scaler 
+# verify auto-scaler
 kubectl -n kube-system logs -f -l app.kubernetes.io/instance=cluster-autoscaler
 ```

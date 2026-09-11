@@ -11,7 +11,7 @@ Components running in the master cluster have to be able to talk to the seed clu
 - getting the kubeconfigs
 - distributing global configuration like Presets, Application Definitions, Templates, etc.
 
-Therefore the seed has to be configured in the master cluster.
+Therefore, the seed has to be configured in the master cluster.
 
 In our case, the seed and master components are running in the same cluster.
 
@@ -43,7 +43,7 @@ kubectl apply -f /training/kkp/seed.yaml
 
 ```bash
 # verify the seed components are running
-# => kubermatic-seed-controller-manager-... 
+# => kubermatic-seed-controller-manager-...
 # => nodeport-proxy-...
 # => seed-proxy-kubermatic-...
 watch -n 1 kubectl -n kubermatic get pods
@@ -100,7 +100,7 @@ yq ".minio.credentials.secretKey = \"rooNgohsh4ohJo7aefoofeiTae4poht0cohxua5eith
 # re-run the installer with kubermatic-seed option
 kubermatic-installer deploy kubermatic-seed \
     --kubeconfig /root/.kube/config \
-    --charts-directory /training/kkp/charts deploy \
+    --charts-directory /training/kkp/charts \
     --config /training/kkp/kubermatic.yaml \
     --helm-values /training/kkp/values.yaml
 ```

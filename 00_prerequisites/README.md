@@ -9,7 +9,7 @@ In this lab you will ensure everything is in place to create a Kubernetes cluste
 mkdir /training/.secrets
 ```
 
-Drag and drop the files (provided by the trainer) into the directory `/training/.secrets/`
+Drag and drop the files (provided by the trainer) into the directory `/training/.secrets/`.
 
 - environment.sh
 - gcp-service-account.json
@@ -17,7 +17,7 @@ Drag and drop the files (provided by the trainer) into the directory `/training/
 ## Set important environment variables
 
 > **IMPORTANT:**
-> These variables will get referenced during the following labs. Make sure to set them before continuing. You can find the required information in the file `/training/.secrets/README.md`, but, for convenience, there is also a shell script which will persist the environment variables in the file `/root/.trainingrc`.
+> These variables will get referenced during the following labs. Make sure to set them before continuing. The shell script `/training/.secrets/environment.sh` persists them in the file `/root/.trainingrc`.
 
 ```bash
 # make the shell script executable
@@ -32,6 +32,7 @@ source /root/.trainingrc
 # verify
 echo $GCP_PROJECT
 echo $TRAINEE_NAME
+echo $TRAINEE_EMAIL
 echo $DOMAIN
 echo $DNS_ZONE_NAME
 ```

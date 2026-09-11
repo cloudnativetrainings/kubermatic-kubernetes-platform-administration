@@ -12,6 +12,7 @@ verify:
 	helm version
 	test -n "$(GCP_PROJECT)" 
 	test -n "$(TRAINEE_NAME)" 
+	test -n "$(TRAINEE_EMAIL)" 
 	test -n "$(DOMAIN)" 
 	test -n "$(DNS_ZONE_NAME)" 
 # TODO	kubens => failing due no cluster yet

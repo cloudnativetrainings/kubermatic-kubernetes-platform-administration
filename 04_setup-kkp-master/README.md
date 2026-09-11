@@ -14,7 +14,7 @@ kubermatic-installer deploy \
 
 ```bash
 # verify everything is running smoothly
-# => note that the pods kubermatic-api-XXXXX will not run smoothly due to dns is not setup yet
+# => note that the pods kubermatic-api-XXXXX will not run smoothly because DNS is not set up yet
 watch -n 1 kubectl -n kubermatic get pods
 ```
 
@@ -40,7 +40,7 @@ echo $GATEWAY_IP
 ```
 
 ```bash
-# create the dns entries, pointing at the gatway ip at gcp
+# create the dns entries, pointing at the gateway ip at gcp
 gcloud dns record-sets transaction start --zone=$DNS_ZONE_NAME
 gcloud dns record-sets transaction add --zone=$DNS_ZONE_NAME --ttl 60 --name="$DOMAIN." --type A $GATEWAY_IP
 gcloud dns record-sets transaction add --zone=$DNS_ZONE_NAME --ttl 60 --name="*.$DOMAIN."  --type A $GATEWAY_IP

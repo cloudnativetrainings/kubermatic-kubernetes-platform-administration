@@ -35,7 +35,7 @@ kubermatic-installer --version
 
 ```bash
 # add kubermatic-installer completion to your environment
-echo 'source <(kubermatic-installer completion zsh)' | tee -a /root/.trainingrc 
+echo 'source <(kubermatic-installer completion zsh)' | tee -a /root/.trainingrc
 ```
 
 ```bash

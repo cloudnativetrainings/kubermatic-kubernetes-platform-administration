@@ -11,7 +11,7 @@ base64 -w0 /training/.secrets/gcp-service-account.json; echo
 ```
 
 >**WARNING:**
->Please ensure that you copy the whole base64-encoded string
+>Please ensure that you copy the whole base64-encoded string.
 
 - Create a new project via the button `+ Add Project`.
 - Choose the project.
@@ -22,7 +22,7 @@ base64 -w0 /training/.secrets/gcp-service-account.json; echo
   - Within Tab `Cluster`
     - Generate a random Cluster name
   - Within Tab `Settings`
-    - Copy the base64 encoded GCP google-sa-key.json in the field `Service Account`
+    - Copy the base64 encoded content of `gcp-service-account.json` into the field `Service Account`
   - Within Tab `Initial Nodes`
     - Generate a random MachineDeployment name
     - Set the number of replicas to 1
@@ -34,7 +34,7 @@ base64 -w0 /training/.secrets/gcp-service-account.json; echo
     - Click the button `Create Cluster`
 
 >**NOTE:**
->It will take ~ 5 minutes until your cluster is usable. The control plane of the user cluster will be up very soon, but the worker node VMs still have to be provisioned.
+>It will take about 5 minutes until your cluster is usable. The control plane of the user cluster will be up very soon, but the worker node VMs still have to be provisioned.
 
 ## Verify in Bash
 

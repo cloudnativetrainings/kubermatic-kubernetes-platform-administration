@@ -23,3 +23,15 @@ does not work with special characters
 # clean up
 
 kubeone reset --cleanup-volumes --cleanup-load-balancers
+
+# check docu links and make them consistent, also in k1
+
+do this via claude
+
+## Aus den Labs ausgelagert (lab-linter)
+
+- `02_install-kkp-installer` / `03_prepare-kkp-master-configuration`: yq mit Arrays ohne feste Indizes schreiben (`.spec.versions.versions[0]`, `.dex.config.staticClients[0]`).
+- `03_prepare-kkp-master-configuration`: war das ein Breaking Change? Früher wurde ein zweiter Random Key gebraucht.
+- `04_setup-kkp-master`: scheint seit 2.31 nicht mehr nötig, war vorher im Lab:
+  `sed -i "s/letsencrypt-staging/letsencrypt-prod/g" /training/kkp/values.yaml`
+- `04_setup-kkp-master`: alle `sed`-Aufrufe durch `yq` ersetzen.
