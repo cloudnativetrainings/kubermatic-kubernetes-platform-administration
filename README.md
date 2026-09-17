@@ -21,7 +21,7 @@ docker run -it -d \
   -p 8080:8080 \
   -p 8081:8081 \
   --hostname kkp-workshop \
-  -v ./kubermatic-kubernetes-platform-administration:/training \
+  -v $(PWD)/kubermatic-kubernetes-platform-administration:/training \
   quay.io/kubermatic-labs/training-ghcs-kubermatic-kubernetes-platform-administration-trainee-environment:2.0.0
 ```
 
