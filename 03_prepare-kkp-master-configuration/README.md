@@ -45,9 +45,9 @@ cp /training/kubermatic-ee-$KKP_INSTALLER_VERSION/examples/values.example.yaml /
 sed -i "s/kkp.example.com/$DOMAIN/g" /training/kkp/values.yaml
 ```
 
+<!-- # TODO get rid of array index changes
+# TODO was there a breaking change, prev there was another random key needed -->
 ```bash
-# TODO get rid of array index changes
-# TODO was there a breaking change, prev there was another random key needed
 # configure auth
 # => note that the value has to be exactly the same as in the file `/training/kkp/kubermatic.yaml` field `spec.auth.issuerClientSecret`
 yq ".dex.config.staticClients[0].secret = strenv(KUBERMATIC_ISSUER_SECRET)" -i /training/kkp/values.yaml
