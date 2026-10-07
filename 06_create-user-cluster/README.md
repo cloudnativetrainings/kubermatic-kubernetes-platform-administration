@@ -46,8 +46,8 @@ kubectl get ns
 
 ```bash
 # Let's get the cluster suffix into a variable for convinience
-CLUSTER_NS=$(kubectl get ns --no-headers | awk '$1 ~ /^cluster-/ {print $1}')
-CLUSTER_SUFFIX=${CLUSTER_NS#cluster-}
+USER_CLUSTER_NS=$(kubectl get ns --no-headers | awk '$1 ~ /^cluster-/ {print $1}')
+USER_CLUSTER_NAME=${USER_CLUSTER_NS#cluster-}
 
 ```
 
