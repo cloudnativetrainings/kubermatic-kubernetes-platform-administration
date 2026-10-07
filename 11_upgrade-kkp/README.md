@@ -98,7 +98,7 @@ kubermatic-installer deploy kubermatic-seed \
 
 ```bash
 # verify the control plane components of the user cluster get restarted
-watch -n 1 kubectl -n cluster-XXXXX get pods
+watch -n 1 kubectl -n $USER_CLUSTER_NS get pods
 ```
 
 ## Verification of Upgrade
