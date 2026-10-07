@@ -45,13 +45,21 @@ kubectl get ns
 ```
 
 ```bash
+# Let's get the cluster suffix into a variable for convinience
+USER_CLUSTER_NS=$(kubectl get ns --no-headers | awk '$1 ~ /^cluster-/ {print $1}')
+USER_CLUSTER_NAME=${USER_CLUSTER_NS#cluster-}
+
+```
+
+```bash
 # see all the control plane components of the cluster
-watch -n 1 kubectl -n cluster-XXXXX get pods
+watch -n 1 kubectl -n $USER_CLUSTER_NS get pods
 ```
 
 ```bash
 # you can watch the machine-controller of the cluster provisioning a worker node
-kubectl -n cluster-XXXXX logs -f machine-controller-XXXXX
+MACHINE_CONTROLLER_POD=$(kubectl -n "$USER_CLUSTER_NS" get pods -l app=machine-controller -o jsonpath='{.items[0].metadata.name}')
+kubectl -n $USER_CLUSTER_NS logs -f $MACHINE_CONTROLLER_POD
 ```
 
 ## Connect to the User Cluster
@@ -63,7 +71,7 @@ Drag and drop the downloaded kubeconfig into the directory `/training/` of your 
 Connect to the User Cluster:
 
 ```bash
-kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX get nodes
+kubectl --kubeconfig=/training/kubeconfig-admin-$USER_CLUSTER_NAME get nodes
 ```
 
 ## Test the resiliency of a User Cluster
@@ -72,12 +80,12 @@ Now we will check what happens if a component of the user cluster's control plan
 
 ```bash
 # delete one of the etcd pods
-kubectl -n cluster-XXXXX delete pod etcd-0
+kubectl -n $USER_CLUSTER_NS delete pod etcd-0
 ```
 
 ```bash
 # the StatefulSet will take care to restart the deleted etcd-0 node
-watch -n 1 kubectl -n cluster-XXXXX get pods
+watch -n 1 kubectl -n $USER_CLUSTER_NS get pods
 ```
 
 >**NOTE:**
@@ -87,25 +95,25 @@ watch -n 1 kubectl -n cluster-XXXXX get pods
 
 ```bash
 # everything is declarative with KKP
-kubectl get cluster XXXXX -o yaml
+kubectl get cluster $USER_CLUSTER_NAME -o yaml
 ```
 
 ```bash
 # get machinedeployments of the user cluster
-kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n kube-system get machinedeployment
+MD_NAME=$(kubectl --kubeconfig=/training/kubeconfig-admin-$USER_CLUSTER_NAME -n kube-system get machinedeployment -o jsonpath='{.items[0].metadata.name}')
 ```
 
 ```bash
 # edit the machine deployment of the user cluster, eg scale the worker nodes to 1 replica
-kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n kube-system edit md MD-NAME
+kubectl --kubeconfig=/training/kubeconfig-admin-$USER_CLUSTER_NAME -n kube-system edit md $MD_NAME
 ```
 
 ```bash
 # scale the machine deployment of the user cluster to 3
-kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n kube-system scale md MD-NAME --replicas 3
+kubectl --kubeconfig=/training/kubeconfig-admin-$USER_CLUSTER_NAME -n kube-system scale md $MD_NAME --replicas 3
 ```
 
 ```bash
 # verify your changes
-watch -n 1 kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n kube-system get md,ms,machine,nodes
+watch -n 1 kubectl --kubeconfig=/training/kubeconfig-admin-$USER_CLUSTER_NAME -n kube-system get md,ms,machine,nodes
 ```

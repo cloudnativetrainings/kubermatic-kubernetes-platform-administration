@@ -29,17 +29,17 @@ You will be able to deploy the application in your user cluster after about 30 s
 
 ```bash
 # verify the helm release
-helm --kubeconfig /training/kubeconfig-admin-XXXXX -n training-application ls
+helm --kubeconfig /training/kubeconfig-admin-$USER_CLUSTER_NAME -n training-application ls
 ```
 
 ```bash
 # verify the application
-kubectl --kubeconfig=/training/kubeconfig-admin-XXXXX -n training-application get all
+kubectl --kubeconfig=/training/kubeconfig-admin-$USER_CLUSTER_NAME -n training-application get all
 ```
 
 ```bash
 # get the IP of the LoadBalancer of the application
-APP_IP=$(kubectl --kubeconfig /training/kubeconfig-admin-XXXXX -n training-application get svc my-app -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+APP_IP=$(kubectl --kubeconfig /training/kubeconfig-admin-$USER_CLUSTER_NAME -n training-application get svc my-app -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 ```
 
 ```bash
