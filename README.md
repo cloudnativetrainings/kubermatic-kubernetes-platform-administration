@@ -10,7 +10,7 @@ In this training you will learn how to install and administer the Kubermatic Kub
 git clone https://github.com/cloudnativetrainings/kubermatic-kubernetes-platform-administration
 ```
 
-### Run the k1-workshop Container
+### Run the kkp-workshop Container
 
 ```bash
 docker run -it -d \
